@@ -13,8 +13,8 @@ Rule 9     expr -> expr + expr  [precedence=left, level=1]
 
 Unused terminals:
 
-    IDENTIFIANT
     INFERIEUR_OU_EGAL
+    IDENTIFIANT
 
 Terminals, with rules where they appear:
 
