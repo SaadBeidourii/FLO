@@ -10,8 +10,8 @@ class FloParser(Parser):
 
 	# Définition des priorités
 	precedence = (
-		('left', '+'),
-		('left', '*'),
+		('left', '+','-'),
+		('left', '*','/','%'),
 	)
 
 	# Règles gramaticales et actions associées
@@ -43,9 +43,21 @@ class FloParser(Parser):
 	def expr(self, p):
 		return arbre_abstrait.Operation('+',p[0],p[2])
 
+	@_('expr "-" expr')
+	def expr(self, p):
+		return arbre_abstrait.Operation('-',p[0],p[2])
+
 	@_('expr "*" expr')
 	def expr(self, p):
 		return arbre_abstrait.Operation('*',p[0],p[2])
+
+	@_('expr "/" expr')
+	def expr(self, p):
+		return arbre_abstrait.Operation('/', p[0], p[2])
+
+	@_('expr "%" expr')
+	def expr(self,p):
+		return arbre_abstrait.Operation('%',p[0],p[2])
 
 	@_('"(" expr ")"')
 	def expr(self, p):
