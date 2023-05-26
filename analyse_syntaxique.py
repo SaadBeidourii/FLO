@@ -77,7 +77,7 @@ class FloParser(Parser):
     def expr(self, p):
         return arbre_abstrait.Operation("*", arbre_abstrait.Entier(-1), p[1])
 
-    @_('nomVariable')
+    @_('IDENTIFIANT')
     def facteur(self, p):
         return arbre_abstrait.Variable(p.NOM_VARIABLE)
 
