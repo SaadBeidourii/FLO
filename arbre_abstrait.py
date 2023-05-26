@@ -85,3 +85,15 @@ class AppelFonction:
         for argument in self.arguments:
             argument.afficher(indent + 1)
         afficher("</appelFonction>", indent)
+
+
+class ExprList:
+    def init(self, expr, exprList=None):
+        self.expr = expr
+        self.exprList = exprList
+
+    def afficher(self, indent=0):
+        afficher("[Argument]", indent + 1)
+        self.expr.afficher(indent + 2)
+        if self.exprList:
+            self.exprList.afficher(indent)

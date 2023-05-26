@@ -79,7 +79,7 @@ class FloParser(Parser):
 
     @_('IDENTIFIANT')
     def facteur(self, p):
-        return arbre_abstrait.Variable(p.NOM_VARIABLE)
+        return arbre_abstrait.Variable(p.IDENTIFIANT)
 
     @_('LIRE "(" ")"')
     def facteur(self):
@@ -87,11 +87,19 @@ class FloParser(Parser):
 
     @_('IDENTIFIANT "(" ")"')
     def facteur(self, p):
-        return arbre_abstrait.AppelFonction(p.IDENTIFIANT,[])
+        return arbre_abstrait.AppelFonction(p.IDENTIFIANT, [])
 
-    #@_('IDENTIFIANT "(" exprList ")"')
-    #def facteur(self, p):
-     #   return arbre_abstrait.AppelFonction(p.IDENTIFIANT, p.exprList)
+    @_('IDENTIFIANT "(" exprList ")"')
+    def facteur(self, p):
+        return arbre_abstrait.AppelFonction(p.IDENTIFIANT, p.exprList)
+
+    @_('expr')
+    def exprList(self, p):
+        return arbre_abstrait.ExprList(p.expr)
+
+    @_('expr "," exprList')
+    def exprList(self, p):
+        return arbre_abstrait.ExprList(p.exprList, p.expr)
 
 
 if __name__ == '__main__':
