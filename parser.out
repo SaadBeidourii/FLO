@@ -19,22 +19,22 @@ Rule 15    expr -> produit
 
 Unused terminals:
 
-    INFERIEUR_OU_EGAL
-    SI
-    ET
-    FAUX
-    LIRE
-    TANT_QUE
-    RETOURNER
-    SINON
-    SUPERIEUR_OU_EGAL
-    OU
-    BOOLEEN
-    IDENTIFIANT
-    NON_EGAL
     NON
+    INFERIEUR_OU_EGAL
+    ET
+    TANT_QUE
+    LIRE
+    BOOLEEN
+    OU
+    FAUX
+    IDENTIFIANT
     VRAI
+    SINON
+    RETOURNER
     EGAL
+    SI
+    SUPERIEUR_OU_EGAL
+    NON_EGAL
 
 Terminals, with rules where they appear:
 

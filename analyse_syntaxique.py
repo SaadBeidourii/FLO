@@ -1,5 +1,7 @@
 import sys
 from sly import Parser
+
+import analyse_lexicale
 from analyse_lexicale import FloLexer
 import arbre_abstrait
 
@@ -70,9 +72,26 @@ class FloParser(Parser):
     @_('expr "-" produit')
     def expr(self, p):
         return arbre_abstrait.Operation('-', p[0], p[2])
+
     @_(' "-" facteur')
-    def expr(self,p):
-        return arbre_abstrait.Operation("*",arbre_abstrait.Entier(-1),p[1])
+    def expr(self, p):
+        return arbre_abstrait.Operation("*", arbre_abstrait.Entier(-1), p[1])
+
+    @_('nomVariable')
+    def facteur(self, p):
+        return arbre_abstrait.Variable(p.NOM_VARIABLE)
+
+    @_('LIRE "(" ")"')
+    def facteur(self):
+        return arbre_abstrait.Lire()
+
+    @_('IDENTIFIANT "(" ")"')
+    def facteur(self, p):
+        return arbre_abstrait.AppelFonction(p.IDENTIFIANT,[])
+
+    #@_('IDENTIFIANT "(" exprList ")"')
+    #def facteur(self, p):
+     #   return arbre_abstrait.AppelFonction(p.IDENTIFIANT, p.exprList)
 
 
 if __name__ == '__main__':
