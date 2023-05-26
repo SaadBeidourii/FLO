@@ -99,7 +99,7 @@ class FloParser(Parser):
 
     @_('expr "," exprList')
     def exprList(self, p):
-        return arbre_abstrait.ExprList(p.exprList, p.expr)
+        return arbre_abstrait.ExprList(p.expr, p.exprList)
 
 
 if __name__ == '__main__':

@@ -88,12 +88,23 @@ class AppelFonction:
 
 
 class ExprList:
-    def init(self, expr, exprList=None):
-        self.expr = expr
-        self.exprList = exprList
+    def __init__(self, expr, exprList=None):
+        self.expressions = []
+        self.ajouter_expression(expr)
+        if exprList:
+            self.expressions.extend(exprList.expressions)
+
+    def ajouter_expression(self, expr):
+        self.expressions.append(expr)
 
     def afficher(self, indent=0):
-        afficher("[Argument]", indent + 1)
-        self.expr.afficher(indent + 2)
-        if self.exprList:
-            self.exprList.afficher(indent)
+        afficher("<expressionList>", indent)
+        for expr in self.expressions:
+            expr.afficher(indent + 1)
+        afficher("</expressionList>", indent)
+
+    def __iter__(self):
+        return iter(self.expressions)
+
+
+

@@ -25,20 +25,20 @@ Rule 21    exprList -> expr
 
 Unused terminals:
 
-    ET
+    SINON
     SUPERIEUR_OU_EGAL
-    EGAL
-    OU
+    INFERIEUR_OU_EGAL
+    SI
     TANT_QUE
+    BOOLEEN
     NON_EGAL
     NON
-    SINON
-    BOOLEEN
-    FAUX
+    ET
+    OU
+    EGAL
     RETOURNER
+    FAUX
     VRAI
-    SI
-    INFERIEUR_OU_EGAL
 
 Terminals, with rules where they appear:
 
