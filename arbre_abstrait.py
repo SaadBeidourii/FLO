@@ -107,4 +107,16 @@ class ExprList:
         return iter(self.expressions)
 
 
+class Booleen:
+    def __init__(self, valeur):
+        self.valeur = valeur
+
+    def afficher(self, indent=0):
+        print("[Booleen:" + str(self.valeur) + "]" + " " * indent)
+
+    def evaluer(self):
+        return self.valeur
+
+    def __str__(self):
+        return str(self.valeur)
 

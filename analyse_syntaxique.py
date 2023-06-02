@@ -101,6 +101,66 @@ class FloParser(Parser):
     def exprList(self, p):
         return arbre_abstrait.ExprList(p.expr, p.exprList)
 
+    @_('facteur')
+    def booleen(self, p):
+        return p[0]
+
+    @_('VRAI')
+    def booleen(self, p):
+        return arbre_abstrait.Booleen(True)
+
+    @_('FAUX')
+    def booleen(self, p):
+        return arbre_abstrait.Booleen(False)
+
+    @_('NON booleen')
+    def booleen(self, p):
+        return arbre_abstrait.Operation('NON', p[1], None)
+
+    @_('booleen ET booleen')
+    def booleen(self, p):
+        return arbre_abstrait.Operation('ET', p[0], p[2])
+
+    @_('booleen OU booleen')
+    def booleen(self, p):
+        return arbre_abstrait.Operation('OU', p[0], p[2])
+
+    @_('expr')
+    def expr(self, p):
+        return p[0]
+
+    @_('booleen')
+    def expr(self, p):
+        return p[0]
+
+    @_('expr INFERIEUR_OU_EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('<=', p[0], p[2])
+
+    @_('expr SUPERIEUR_OU_EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('>=', p[0], p[2])
+
+    @_('expr EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('==', p[0], p[2])
+
+    @_('expr NON_EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('!=', p[0], p[2])
+
+    @_('expr "<" expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('<', p[0], p[2])
+
+    @_('expr ">" expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('>', p[0], p[2])
+
+    @_('BOOLEEN')
+    def expr(self, p):
+        return arbre_abstrait.Booleen(p.BOOLEEN)
+
 
 if __name__ == '__main__':
     lexer = FloLexer()

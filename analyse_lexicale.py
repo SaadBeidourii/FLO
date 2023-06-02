@@ -38,6 +38,7 @@ class FloLexer(Lexer):
 
     # cas spéciaux:
     IDENTIFIANT['ecrire'] = ECRIRE
+    IDENTIFIANT['booleen'] = BOOLEEN
 
     # Syntaxe des commentaires à ignorer
     ignore_comment = r'\#.*'
