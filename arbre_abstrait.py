@@ -1,5 +1,5 @@
 """
-Affiche une chaine de caractère avec une certaine identation
+Affiche une chaîne de caractères avec une certaine indentation
 """
 
 
@@ -21,6 +21,9 @@ class ListeInstructions:
     def __init__(self):
         self.instructions = []
 
+    def ajouter_instruction(self, instruction):
+        self.instructions.append(instruction)
+
     def afficher(self, indent=0):
         afficher("<listeInstructions>", indent)
         for instruction in self.instructions:
@@ -28,25 +31,87 @@ class ListeInstructions:
         afficher("</listeInstructions>", indent)
 
 
+class Declaration:
+    def __init__(self, type_var, nom_variable):
+        self.type_var = type_var
+        self.nom_variable = nom_variable
+
+    def afficher(self, indent=0):
+        afficher("<declaration>", indent)
+        afficher(self.type_var + " " + self.nom_variable, indent + 1)
+        afficher("</declaration>", indent)
+
+
+class Affectation:
+    def __init__(self, nom_variable, expression):
+        self.nom_variable = nom_variable
+        self.expression = expression
+
+    def afficher(self, indent=0):
+        afficher("<affectation>", indent)
+        afficher(self.nom_variable, indent + 1)
+        self.expression.afficher(indent + 1)
+        afficher("</affectation>", indent)
+
+
+class InstructionConditionnelle:
+    def __init__(self, conditions, instructions):
+        self.conditions = conditions
+        self.instructions = instructions
+
+    def afficher(self, indent=0):
+        afficher("<instructionConditionnelle>", indent)
+        for condition, instruction in zip(self.conditions, self.instructions):
+            afficher("<condition>", indent + 1)
+            condition.afficher(indent + 2)
+            afficher("</condition>", indent + 1)
+            instruction.afficher(indent + 1)
+        afficher("</instructionConditionnelle>", indent)
+
+
+class InstructionBoucle:
+    def __init__(self, condition, instructions):
+        self.condition = condition
+        self.instructions = instructions
+
+    def afficher(self, indent=0):
+        afficher("<instructionBoucle>", indent)
+        afficher("<condition>", indent + 1)
+        self.condition.afficher(indent + 2)
+        afficher("</condition>", indent + 1)
+        self.instructions.afficher(indent + 1)
+        afficher("</instructionBoucle>", indent)
+
+
+class Retourner:
+    def __init__(self, expression):
+        self.expression = expression
+
+    def afficher(self, indent=0):
+        afficher("<retourner>", indent)
+        self.expression.afficher(indent + 1)
+        afficher("</retourner>", indent)
+
+
 class Ecrire:
-    def __init__(self, exp):
-        self.exp = exp
+    def __init__(self, expression):
+        self.expression = expression
 
     def afficher(self, indent=0):
         afficher("<ecrire>", indent)
-        self.exp.afficher(indent + 1)
+        self.expression.afficher(indent + 1)
         afficher("</ecrire>", indent)
 
 
 class Operation:
-    def __init__(self, op, exp1, exp2):
+    def __init__(self, operateur, exp1, exp2):
+        self.operateur = operateur
         self.exp1 = exp1
-        self.op = op
         self.exp2 = exp2
 
     def afficher(self, indent=0):
         afficher("<operation>", indent)
-        afficher(self.op, indent + 1)
+        afficher(self.operateur, indent + 1)
         self.exp1.afficher(indent + 1)
         self.exp2.afficher(indent + 1)
         afficher("</operation>", indent)
@@ -57,15 +122,29 @@ class Entier:
         self.valeur = valeur
 
     def afficher(self, indent=0):
-        afficher("[Entier:" + str(self.valeur) + "]", indent)
+        afficher("<entier>", indent)
+        afficher(str(self.valeur), indent + 1)
+        afficher("</entier>", indent)
+
+
+class Booleen:
+    def __init__(self, valeur):
+        self.valeur = valeur
+
+    def afficher(self, indent=0):
+        afficher("<booleen>", indent)
+        afficher(str(self.valeur), indent + 1)
+        afficher("</booleen>", indent)
 
 
 class Variable:
-    def __init__(self, nomVariable):
-        self.nomVariable = nomVariable
+    def __init__(self, nom_variable):
+        self.nom_variable = nom_variable
 
     def afficher(self, indent=0):
-        afficher("[Variable:" + self.nomVariable + "]", indent)
+        afficher("<variable>", indent)
+        afficher(self.nom_variable, indent + 1)
+        afficher("</variable>", indent)
 
 
 class Lire:
@@ -75,27 +154,24 @@ class Lire:
 
 
 class AppelFonction:
-    def __init__(self, nomFonction, arguments):
-        self.nomFonction = nomFonction
+    def __init__(self, nom_fonction, arguments):
+        self.nom_fonction = nom_fonction
         self.arguments = arguments
 
     def afficher(self, indent=0):
         afficher("<appelFonction>", indent)
-        afficher(self.nomFonction, indent + 1)
+        afficher(self.nom_fonction, indent + 1)
         for argument in self.arguments:
             argument.afficher(indent + 1)
         afficher("</appelFonction>", indent)
 
 
 class ExprList:
-    def __init__(self, expr, exprList=None):
-        self.expressions = []
-        self.ajouter_expression(expr)
-        if exprList:
-            self.expressions.extend(exprList.expressions)
+    def __init__(self, expressions=None):
+        self.expressions = expressions if expressions is not None else []
 
-    def ajouter_expression(self, expr):
-        self.expressions.append(expr)
+    def ajouter_expression(self, expression):
+        self.expressions.append(expression)
 
     def afficher(self, indent=0):
         afficher("<expressionList>", indent)
@@ -105,6 +181,3 @@ class ExprList:
 
     def __iter__(self):
         return iter(self.expressions)
-
-
-
