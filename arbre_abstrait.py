@@ -16,6 +16,19 @@ class Programme:
         self.listeInstructions.afficher(indent + 1)
         afficher("</programme>", indent)
 
+class Operation:
+    def __init__(self, operateur, exp1, exp2):
+        self.operateur = operateur
+        self.exp1 = exp1
+        self.exp2 = exp2
+
+    def afficher(self, indent=0):
+        afficher("<operation>", indent)
+        afficher(self.operateur, indent + 1)
+        self.exp1.afficher(indent + 1)
+        self.exp2.afficher(indent + 1)
+        afficher("</operation>", indent)
+
 
 class ListeInstructions:
     def __init__(self):
