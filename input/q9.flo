@@ -1,33 +1,3 @@
-# Ceci est un fichier .flo pour tester les opérations booléennes
+ecrire ( Vrai et Vrai ) ;
+ecrire ( Vrai ou Vrai ) ;
 
-# déclaration de variables booléennes
-vrai = Vrai ;
-faux = Faux ;
-
-# utilisation de NOT
-nonVrai = non vrai ; # devrait être Faux
-nonFaux = non faux ; # devrait être Vrai
-
-# utilisation de AND
-vraiEtVrai = vrai et vrai ; # devrait être Vrai
-vraiEtFaux = vrai et faux ; # devrait être Faux
-fauxEtVrai = faux et vrai ; # devrait être Faux
-fauxEtFaux = faux et faux ; # devrait être Faux
-
-# utilisation de OR
-vraiOuVrai = vrai ou vrai ; # devrait être Vrai
-vraiOuFaux = vrai ou faux ; # devrait être Vrai
-fauxOuVrai = faux ou vrai ; # devrait être Vrai
-fauxOuFaux = faux ou faux ; # devrait être Faux
-
-# écrire les résultats
-ecrire ( nonVrai ) ;
-ecrire ( nonFaux ) ;
-ecrire ( vraiEtVrai ) ;
-ecrire ( vraiEtFaux ) ;
-ecrire ( fauxEtVrai ) ;
-ecrire ( fauxEtFaux ) ;
-ecrire ( vraiOuVrai ) ;
-ecrire ( vraiOuFaux ) ;
-ecrire ( fauxOuVrai ) ;
-ecrire ( fauxOuFaux ) ;

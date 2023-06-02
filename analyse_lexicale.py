@@ -39,6 +39,7 @@ class FloLexer(Lexer):
     # cas spéciaux:
     IDENTIFIANT['ecrire'] = ECRIRE
 
+
     # Syntaxe des commentaires à ignorer
     ignore_comment = r'\#.*'
 

@@ -109,28 +109,28 @@ class FloParser(Parser):
     def booleen(self, p):
         return arbre_abstrait.Operation('NON', p.booleen)
 
-    @_('expr ET expr')
+    @_('booleen ET booleen')
     def expr(self, p):
         return arbre_abstrait.Operation('ET', p[0], p[2])
 
-    @_('expr OU expr')
+    @_('booleen OU booleen')
     def expr(self, p):
         return arbre_abstrait.Operation('OU', p[0], p[2])
 
     # En supposant que vous avez également des opérations de comparaison
-    @_('expr EGAL expr')
+    @_('booleen EGAL booleen')
     def expr(self, p):
         return arbre_abstrait.Operation('EGAL', p[0], p[2])
 
-    @_('expr NON_EGAL expr')
+    @_('booleen NON_EGAL booleen')
     def expr(self, p):
         return arbre_abstrait.Operation('NON_EGAL', p[0], p[2])
 
-    @_('expr INFERIEUR_OU_EGAL expr')
+    @_('booleen INFERIEUR_OU_EGAL booleen')
     def expr(self, p):
         return arbre_abstrait.Operation('INFERIEUR_OU_EGAL', p[0], p[2])
 
-    @_('expr SUPERIEUR_OU_EGAL expr')
+    @_('booleen SUPERIEUR_OU_EGAL booleen')
     def expr(self, p):
         return arbre_abstrait.Operation('SUPERIEUR_OU_EGAL', p[0], p[2])
 
