@@ -150,6 +150,18 @@ class FloParser(Parser):
     def instruction(self, p):
         return arbre_abstrait.Affectation(p.IDENTIFIANT, p.expr)
 
+    @_('TYPE IDENTIFIANT ";"')
+    def declaration(self, p):
+        return arbre_abstrait.Declaration(p.TYPE, p.IDENTIFIANT)
+
+    @_('BOOLEEN')
+    def TYPE(self, p):
+        return 'booleen'
+
+    @_('ENTIER')
+    def TYPE(self, p):
+        return 'entier'
+
 
 if __name__ == '__main__':
     lexer = FloLexer()

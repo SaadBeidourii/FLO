@@ -4,88 +4,95 @@ Rule 0     S' -> prog
 Rule 1     prog -> listeInstructions
 Rule 2     listeInstructions -> instruction listeInstructions
 Rule 3     listeInstructions -> instruction
-Rule 4     instruction -> ecrire
-Rule 5     ecrire -> ECRIRE ( expr ) ;
-Rule 6     facteur -> IDENTIFIANT ( exprList )
-Rule 7     facteur -> IDENTIFIANT ( )
-Rule 8     facteur -> LIRE ( )
-Rule 9     facteur -> IDENTIFIANT
-Rule 10    facteur -> ENTIER
-Rule 11    facteur -> ( expr )
-Rule 12    produit -> produit % facteur
-Rule 13    produit -> produit / facteur
-Rule 14    produit -> produit * facteur
-Rule 15    produit -> facteur
-Rule 16    expr -> booleen
-Rule 17    expr -> - facteur
-Rule 18    expr -> expr - produit
-Rule 19    expr -> expr + produit
-Rule 20    expr -> produit
-Rule 21    exprList -> expr , exprList
-Rule 22    exprList -> expr
-Rule 23    booleen -> facteur SUPERIEUR facteur
-Rule 24    booleen -> facteur INFERIEUR facteur
-Rule 25    booleen -> facteur SUPERIEUR_OU_EGAL facteur
-Rule 26    booleen -> facteur INFERIEUR_OU_EGAL facteur
-Rule 27    booleen -> facteur NON_EGAL facteur
-Rule 28    booleen -> facteur EGAL facteur
-Rule 29    booleen -> booleen OU booleen
-Rule 30    booleen -> booleen ET booleen
-Rule 31    booleen -> NON booleen
-Rule 32    booleen -> BOOLEEN
+Rule 4     instruction -> IDENTIFIANT = expr ;
+Rule 5     instruction -> ecrire
+Rule 6     ecrire -> ECRIRE ( expr ) ;
+Rule 7     facteur -> IDENTIFIANT ( exprList )
+Rule 8     facteur -> IDENTIFIANT ( )
+Rule 9     facteur -> LIRE ( )
+Rule 10    facteur -> IDENTIFIANT
+Rule 11    facteur -> ENTIER
+Rule 12    facteur -> ( expr )
+Rule 13    produit -> produit % facteur
+Rule 14    produit -> produit / facteur
+Rule 15    produit -> produit * facteur
+Rule 16    produit -> facteur
+Rule 17    expr -> booleen
+Rule 18    expr -> - facteur
+Rule 19    expr -> expr - produit
+Rule 20    expr -> expr + produit
+Rule 21    expr -> produit
+Rule 22    exprList -> expr , exprList
+Rule 23    exprList -> expr
+Rule 24    booleen -> facteur SUPERIEUR facteur
+Rule 25    booleen -> facteur INFERIEUR facteur
+Rule 26    booleen -> facteur SUPERIEUR_OU_EGAL facteur
+Rule 27    booleen -> facteur INFERIEUR_OU_EGAL facteur
+Rule 28    booleen -> facteur NON_EGAL facteur
+Rule 29    booleen -> facteur EGAL facteur
+Rule 30    booleen -> booleen OU booleen
+Rule 31    booleen -> booleen ET booleen
+Rule 32    booleen -> NON booleen
+Rule 33    booleen -> BOOLEEN
+Rule 34    declaration -> TYPE IDENTIFIANT ;
+Rule 35    TYPE -> ENTIER
+Rule 36    TYPE -> BOOLEEN
 
 Unused terminals:
 
     SI
-    FAUX
-    VRAI
-    TANT_QUE
-    SINON
     RETOURNER
+    FAUX
+    SINON
+    TANT_QUE
+    VRAI
 
 Terminals, with rules where they appear:
 
-%                    : 12
-(                    : 5 6 7 8 11
-)                    : 5 6 7 8 11
-*                    : 14
-+                    : 19
-,                    : 21
--                    : 17 18
-/                    : 13
-;                    : 5
-BOOLEEN              : 32
-ECRIRE               : 5
-EGAL                 : 28
-ENTIER               : 10
-ET                   : 30
+%                    : 13
+(                    : 6 7 8 9 12
+)                    : 6 7 8 9 12
+*                    : 15
++                    : 20
+,                    : 22
+-                    : 18 19
+/                    : 14
+;                    : 4 6 34
+=                    : 4
+BOOLEEN              : 33 36
+ECRIRE               : 6
+EGAL                 : 29
+ENTIER               : 11 35
+ET                   : 31
 FAUX                 : 
-IDENTIFIANT          : 6 7 9
-INFERIEUR            : 24
-INFERIEUR_OU_EGAL    : 26
-LIRE                 : 8
-NON                  : 31
-NON_EGAL             : 27
-OU                   : 29
+IDENTIFIANT          : 4 7 8 10 34
+INFERIEUR            : 25
+INFERIEUR_OU_EGAL    : 27
+LIRE                 : 9
+NON                  : 32
+NON_EGAL             : 28
+OU                   : 30
 RETOURNER            : 
 SI                   : 
 SINON                : 
-SUPERIEUR            : 23
-SUPERIEUR_OU_EGAL    : 25
+SUPERIEUR            : 24
+SUPERIEUR_OU_EGAL    : 26
 TANT_QUE             : 
 VRAI                 : 
 error                : 
 
 Nonterminals, with rules where they appear:
 
-booleen              : 16 29 29 30 30 31
-ecrire               : 4
-expr                 : 5 11 18 19 21 22
-exprList             : 6 21
-facteur              : 12 13 14 15 17 23 23 24 24 25 25 26 26 27 27 28 28
+TYPE                 : 34
+booleen              : 17 30 30 31 31 32
+declaration          : 
+ecrire               : 5
+expr                 : 4 6 12 19 20 22 23
+exprList             : 7 22
+facteur              : 13 14 15 16 18 24 24 25 25 26 26 27 27 28 28 29 29
 instruction          : 2 3
 listeInstructions    : 1 2
-produit              : 12 13 14 18 19 20
+produit              : 13 14 15 19 20 21
 prog                 : 0
 
 
@@ -95,14 +102,16 @@ state 0
     (1) prog -> . listeInstructions
     (2) listeInstructions -> . instruction listeInstructions
     (3) listeInstructions -> . instruction
-    (4) instruction -> . ecrire
-    (5) ecrire -> . ECRIRE ( expr ) ;
-    ECRIRE          shift and go to state 5
+    (4) instruction -> . IDENTIFIANT = expr ;
+    (5) instruction -> . ecrire
+    (6) ecrire -> . ECRIRE ( expr ) ;
+    IDENTIFIANT     shift and go to state 4
+    ECRIRE          shift and go to state 6
 
     prog                           shift and go to state 1
     listeInstructions              shift and go to state 2
     instruction                    shift and go to state 3
-    ecrire                         shift and go to state 4
+    ecrire                         shift and go to state 5
 
 state 1
 
@@ -121,969 +130,1064 @@ state 3
     (3) listeInstructions -> instruction .
     (2) listeInstructions -> . instruction listeInstructions
     (3) listeInstructions -> . instruction
-    (4) instruction -> . ecrire
-    (5) ecrire -> . ECRIRE ( expr ) ;
+    (4) instruction -> . IDENTIFIANT = expr ;
+    (5) instruction -> . ecrire
+    (6) ecrire -> . ECRIRE ( expr ) ;
     $end            reduce using rule 3 (listeInstructions -> instruction .)
-    ECRIRE          shift and go to state 5
+    IDENTIFIANT     shift and go to state 4
+    ECRIRE          shift and go to state 6
 
     instruction                    shift and go to state 3
-    listeInstructions              shift and go to state 6
-    ecrire                         shift and go to state 4
+    listeInstructions              shift and go to state 7
+    ecrire                         shift and go to state 5
 
 state 4
 
-    (4) instruction -> ecrire .
-    ECRIRE          reduce using rule 4 (instruction -> ecrire .)
-    $end            reduce using rule 4 (instruction -> ecrire .)
+    (4) instruction -> IDENTIFIANT . = expr ;
+    =               shift and go to state 8
 
 
 state 5
 
-    (5) ecrire -> ECRIRE . ( expr ) ;
-    (               shift and go to state 7
+    (5) instruction -> ecrire .
+    IDENTIFIANT     reduce using rule 5 (instruction -> ecrire .)
+    ECRIRE          reduce using rule 5 (instruction -> ecrire .)
+    $end            reduce using rule 5 (instruction -> ecrire .)
 
 
 state 6
+
+    (6) ecrire -> ECRIRE . ( expr ) ;
+    (               shift and go to state 9
+
+
+state 7
 
     (2) listeInstructions -> instruction listeInstructions .
     $end            reduce using rule 2 (listeInstructions -> instruction listeInstructions .)
 
 
-state 7
-
-    (5) ecrire -> ECRIRE ( . expr ) ;
-    (16) expr -> . booleen
-    (17) expr -> . - facteur
-    (18) expr -> . expr - produit
-    (19) expr -> . expr + produit
-    (20) expr -> . produit
-    (23) booleen -> . facteur SUPERIEUR facteur
-    (24) booleen -> . facteur INFERIEUR facteur
-    (25) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (27) booleen -> . facteur NON_EGAL facteur
-    (28) booleen -> . facteur EGAL facteur
-    (29) booleen -> . booleen OU booleen
-    (30) booleen -> . booleen ET booleen
-    (31) booleen -> . NON booleen
-    (32) booleen -> . BOOLEEN
-    (12) produit -> . produit % facteur
-    (13) produit -> . produit / facteur
-    (14) produit -> . produit * facteur
-    (15) produit -> . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    -               shift and go to state 11
-    NON             shift and go to state 14
-    BOOLEEN         shift and go to state 15
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
-
-    expr                           shift and go to state 9
-    booleen                        shift and go to state 10
-    facteur                        shift and go to state 12
-    produit                        shift and go to state 13
-
 state 8
 
-    (11) facteur -> ( . expr )
-    (16) expr -> . booleen
-    (17) expr -> . - facteur
-    (18) expr -> . expr - produit
-    (19) expr -> . expr + produit
-    (20) expr -> . produit
-    (23) booleen -> . facteur SUPERIEUR facteur
-    (24) booleen -> . facteur INFERIEUR facteur
-    (25) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (27) booleen -> . facteur NON_EGAL facteur
-    (28) booleen -> . facteur EGAL facteur
-    (29) booleen -> . booleen OU booleen
-    (30) booleen -> . booleen ET booleen
-    (31) booleen -> . NON booleen
-    (32) booleen -> . BOOLEEN
-    (12) produit -> . produit % facteur
-    (13) produit -> . produit / facteur
-    (14) produit -> . produit * facteur
-    (15) produit -> . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    -               shift and go to state 11
-    NON             shift and go to state 14
-    BOOLEEN         shift and go to state 15
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (4) instruction -> IDENTIFIANT = . expr ;
+    (17) expr -> . booleen
+    (18) expr -> . - facteur
+    (19) expr -> . expr - produit
+    (20) expr -> . expr + produit
+    (21) expr -> . produit
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (13) produit -> . produit % facteur
+    (14) produit -> . produit / facteur
+    (15) produit -> . produit * facteur
+    (16) produit -> . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    -               shift and go to state 13
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
-    expr                           shift and go to state 19
-    booleen                        shift and go to state 10
-    facteur                        shift and go to state 12
-    produit                        shift and go to state 13
+    expr                           shift and go to state 11
+    booleen                        shift and go to state 12
+    facteur                        shift and go to state 14
+    produit                        shift and go to state 15
 
 state 9
 
-    (5) ecrire -> ECRIRE ( expr . ) ;
-    (18) expr -> expr . - produit
-    (19) expr -> expr . + produit
-    )               shift and go to state 20
-    -               shift and go to state 21
-    +               shift and go to state 22
+    (6) ecrire -> ECRIRE ( . expr ) ;
+    (17) expr -> . booleen
+    (18) expr -> . - facteur
+    (19) expr -> . expr - produit
+    (20) expr -> . expr + produit
+    (21) expr -> . produit
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (13) produit -> . produit % facteur
+    (14) produit -> . produit / facteur
+    (15) produit -> . produit * facteur
+    (16) produit -> . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    -               shift and go to state 13
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
+    expr                           shift and go to state 21
+    booleen                        shift and go to state 12
+    facteur                        shift and go to state 14
+    produit                        shift and go to state 15
 
 state 10
 
-    (16) expr -> booleen .
-    (29) booleen -> booleen . OU booleen
-    (30) booleen -> booleen . ET booleen
-    )               reduce using rule 16 (expr -> booleen .)
-    -               reduce using rule 16 (expr -> booleen .)
-    +               reduce using rule 16 (expr -> booleen .)
-    ,               reduce using rule 16 (expr -> booleen .)
-    OU              shift and go to state 23
-    ET              shift and go to state 24
+    (7) facteur -> IDENTIFIANT . ( exprList )
+    (8) facteur -> IDENTIFIANT . ( )
+    (10) facteur -> IDENTIFIANT .
+    (               shift and go to state 22
+    SUPERIEUR       reduce using rule 10 (facteur -> IDENTIFIANT .)
+    INFERIEUR       reduce using rule 10 (facteur -> IDENTIFIANT .)
+    SUPERIEUR_OU_EGAL reduce using rule 10 (facteur -> IDENTIFIANT .)
+    INFERIEUR_OU_EGAL reduce using rule 10 (facteur -> IDENTIFIANT .)
+    NON_EGAL        reduce using rule 10 (facteur -> IDENTIFIANT .)
+    EGAL            reduce using rule 10 (facteur -> IDENTIFIANT .)
+    %               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    /               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    *               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    ;               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    -               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    +               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    )               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    ,               reduce using rule 10 (facteur -> IDENTIFIANT .)
+    OU              reduce using rule 10 (facteur -> IDENTIFIANT .)
+    ET              reduce using rule 10 (facteur -> IDENTIFIANT .)
 
 
 state 11
 
-    (17) expr -> - . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (4) instruction -> IDENTIFIANT = expr . ;
+    (19) expr -> expr . - produit
+    (20) expr -> expr . + produit
+    ;               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
 
-    facteur                        shift and go to state 25
 
 state 12
 
-    (23) booleen -> facteur . SUPERIEUR facteur
-    (24) booleen -> facteur . INFERIEUR facteur
-    (25) booleen -> facteur . SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> facteur . INFERIEUR_OU_EGAL facteur
-    (27) booleen -> facteur . NON_EGAL facteur
-    (28) booleen -> facteur . EGAL facteur
-    (15) produit -> facteur .
-    SUPERIEUR       shift and go to state 26
-    INFERIEUR       shift and go to state 27
-    SUPERIEUR_OU_EGAL shift and go to state 28
-    INFERIEUR_OU_EGAL shift and go to state 29
-    NON_EGAL        shift and go to state 30
-    EGAL            shift and go to state 31
-    %               reduce using rule 15 (produit -> facteur .)
-    /               reduce using rule 15 (produit -> facteur .)
-    *               reduce using rule 15 (produit -> facteur .)
-    )               reduce using rule 15 (produit -> facteur .)
-    -               reduce using rule 15 (produit -> facteur .)
-    +               reduce using rule 15 (produit -> facteur .)
-    ,               reduce using rule 15 (produit -> facteur .)
+    (17) expr -> booleen .
+    (30) booleen -> booleen . OU booleen
+    (31) booleen -> booleen . ET booleen
+    ;               reduce using rule 17 (expr -> booleen .)
+    -               reduce using rule 17 (expr -> booleen .)
+    +               reduce using rule 17 (expr -> booleen .)
+    )               reduce using rule 17 (expr -> booleen .)
+    ,               reduce using rule 17 (expr -> booleen .)
+    OU              shift and go to state 26
+    ET              shift and go to state 27
 
 
 state 13
 
-    (20) expr -> produit .
-    (12) produit -> produit . % facteur
-    (13) produit -> produit . / facteur
-    (14) produit -> produit . * facteur
-    )               reduce using rule 20 (expr -> produit .)
-    -               reduce using rule 20 (expr -> produit .)
-    +               reduce using rule 20 (expr -> produit .)
-    ,               reduce using rule 20 (expr -> produit .)
-    %               shift and go to state 32
-    /               shift and go to state 33
-    *               shift and go to state 34
+    (18) expr -> - . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
+    facteur                        shift and go to state 28
 
 state 14
 
-    (31) booleen -> NON . booleen
-    (23) booleen -> . facteur SUPERIEUR facteur
-    (24) booleen -> . facteur INFERIEUR facteur
-    (25) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (27) booleen -> . facteur NON_EGAL facteur
-    (28) booleen -> . facteur EGAL facteur
-    (29) booleen -> . booleen OU booleen
-    (30) booleen -> . booleen ET booleen
-    (31) booleen -> . NON booleen
-    (32) booleen -> . BOOLEEN
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    NON             shift and go to state 14
-    BOOLEEN         shift and go to state 15
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (24) booleen -> facteur . SUPERIEUR facteur
+    (25) booleen -> facteur . INFERIEUR facteur
+    (26) booleen -> facteur . SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> facteur . INFERIEUR_OU_EGAL facteur
+    (28) booleen -> facteur . NON_EGAL facteur
+    (29) booleen -> facteur . EGAL facteur
+    (16) produit -> facteur .
+    SUPERIEUR       shift and go to state 29
+    INFERIEUR       shift and go to state 30
+    SUPERIEUR_OU_EGAL shift and go to state 31
+    INFERIEUR_OU_EGAL shift and go to state 32
+    NON_EGAL        shift and go to state 33
+    EGAL            shift and go to state 34
+    %               reduce using rule 16 (produit -> facteur .)
+    /               reduce using rule 16 (produit -> facteur .)
+    *               reduce using rule 16 (produit -> facteur .)
+    ;               reduce using rule 16 (produit -> facteur .)
+    -               reduce using rule 16 (produit -> facteur .)
+    +               reduce using rule 16 (produit -> facteur .)
+    )               reduce using rule 16 (produit -> facteur .)
+    ,               reduce using rule 16 (produit -> facteur .)
 
-    booleen                        shift and go to state 35
-    facteur                        shift and go to state 36
 
 state 15
 
-    (32) booleen -> BOOLEEN .
-    OU              reduce using rule 32 (booleen -> BOOLEEN .)
-    ET              reduce using rule 32 (booleen -> BOOLEEN .)
-    )               reduce using rule 32 (booleen -> BOOLEEN .)
-    -               reduce using rule 32 (booleen -> BOOLEEN .)
-    +               reduce using rule 32 (booleen -> BOOLEEN .)
-    ,               reduce using rule 32 (booleen -> BOOLEEN .)
+    (21) expr -> produit .
+    (13) produit -> produit . % facteur
+    (14) produit -> produit . / facteur
+    (15) produit -> produit . * facteur
+    ;               reduce using rule 21 (expr -> produit .)
+    -               reduce using rule 21 (expr -> produit .)
+    +               reduce using rule 21 (expr -> produit .)
+    )               reduce using rule 21 (expr -> produit .)
+    ,               reduce using rule 21 (expr -> produit .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
 
 
 state 16
 
-    (6) facteur -> IDENTIFIANT . ( exprList )
-    (7) facteur -> IDENTIFIANT . ( )
-    (9) facteur -> IDENTIFIANT .
-    (               shift and go to state 37
-    SUPERIEUR       reduce using rule 9 (facteur -> IDENTIFIANT .)
-    INFERIEUR       reduce using rule 9 (facteur -> IDENTIFIANT .)
-    SUPERIEUR_OU_EGAL reduce using rule 9 (facteur -> IDENTIFIANT .)
-    INFERIEUR_OU_EGAL reduce using rule 9 (facteur -> IDENTIFIANT .)
-    NON_EGAL        reduce using rule 9 (facteur -> IDENTIFIANT .)
-    EGAL            reduce using rule 9 (facteur -> IDENTIFIANT .)
-    %               reduce using rule 9 (facteur -> IDENTIFIANT .)
-    /               reduce using rule 9 (facteur -> IDENTIFIANT .)
-    *               reduce using rule 9 (facteur -> IDENTIFIANT .)
-    )               reduce using rule 9 (facteur -> IDENTIFIANT .)
-    -               reduce using rule 9 (facteur -> IDENTIFIANT .)
-    +               reduce using rule 9 (facteur -> IDENTIFIANT .)
-    ,               reduce using rule 9 (facteur -> IDENTIFIANT .)
-    OU              reduce using rule 9 (facteur -> IDENTIFIANT .)
-    ET              reduce using rule 9 (facteur -> IDENTIFIANT .)
+    (32) booleen -> NON . booleen
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
+    booleen                        shift and go to state 38
+    facteur                        shift and go to state 39
 
 state 17
 
-    (8) facteur -> LIRE . ( )
-    (               shift and go to state 38
+    (33) booleen -> BOOLEEN .
+    OU              reduce using rule 33 (booleen -> BOOLEEN .)
+    ET              reduce using rule 33 (booleen -> BOOLEEN .)
+    ;               reduce using rule 33 (booleen -> BOOLEEN .)
+    -               reduce using rule 33 (booleen -> BOOLEEN .)
+    +               reduce using rule 33 (booleen -> BOOLEEN .)
+    )               reduce using rule 33 (booleen -> BOOLEEN .)
+    ,               reduce using rule 33 (booleen -> BOOLEEN .)
 
 
 state 18
 
-    (10) facteur -> ENTIER .
-    SUPERIEUR       reduce using rule 10 (facteur -> ENTIER .)
-    INFERIEUR       reduce using rule 10 (facteur -> ENTIER .)
-    SUPERIEUR_OU_EGAL reduce using rule 10 (facteur -> ENTIER .)
-    INFERIEUR_OU_EGAL reduce using rule 10 (facteur -> ENTIER .)
-    NON_EGAL        reduce using rule 10 (facteur -> ENTIER .)
-    EGAL            reduce using rule 10 (facteur -> ENTIER .)
-    %               reduce using rule 10 (facteur -> ENTIER .)
-    /               reduce using rule 10 (facteur -> ENTIER .)
-    *               reduce using rule 10 (facteur -> ENTIER .)
-    )               reduce using rule 10 (facteur -> ENTIER .)
-    -               reduce using rule 10 (facteur -> ENTIER .)
-    +               reduce using rule 10 (facteur -> ENTIER .)
-    ,               reduce using rule 10 (facteur -> ENTIER .)
-    OU              reduce using rule 10 (facteur -> ENTIER .)
-    ET              reduce using rule 10 (facteur -> ENTIER .)
+    (12) facteur -> ( . expr )
+    (17) expr -> . booleen
+    (18) expr -> . - facteur
+    (19) expr -> . expr - produit
+    (20) expr -> . expr + produit
+    (21) expr -> . produit
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (13) produit -> . produit % facteur
+    (14) produit -> . produit / facteur
+    (15) produit -> . produit * facteur
+    (16) produit -> . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    -               shift and go to state 13
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
+    expr                           shift and go to state 40
+    booleen                        shift and go to state 12
+    facteur                        shift and go to state 14
+    produit                        shift and go to state 15
 
 state 19
 
-    (11) facteur -> ( expr . )
-    (18) expr -> expr . - produit
-    (19) expr -> expr . + produit
-    )               shift and go to state 39
-    -               shift and go to state 21
-    +               shift and go to state 22
+    (9) facteur -> LIRE . ( )
+    (               shift and go to state 41
 
 
 state 20
 
-    (5) ecrire -> ECRIRE ( expr ) . ;
-    ;               shift and go to state 40
+    (11) facteur -> ENTIER .
+    SUPERIEUR       reduce using rule 11 (facteur -> ENTIER .)
+    INFERIEUR       reduce using rule 11 (facteur -> ENTIER .)
+    SUPERIEUR_OU_EGAL reduce using rule 11 (facteur -> ENTIER .)
+    INFERIEUR_OU_EGAL reduce using rule 11 (facteur -> ENTIER .)
+    NON_EGAL        reduce using rule 11 (facteur -> ENTIER .)
+    EGAL            reduce using rule 11 (facteur -> ENTIER .)
+    %               reduce using rule 11 (facteur -> ENTIER .)
+    /               reduce using rule 11 (facteur -> ENTIER .)
+    *               reduce using rule 11 (facteur -> ENTIER .)
+    ;               reduce using rule 11 (facteur -> ENTIER .)
+    -               reduce using rule 11 (facteur -> ENTIER .)
+    +               reduce using rule 11 (facteur -> ENTIER .)
+    )               reduce using rule 11 (facteur -> ENTIER .)
+    ,               reduce using rule 11 (facteur -> ENTIER .)
+    OU              reduce using rule 11 (facteur -> ENTIER .)
+    ET              reduce using rule 11 (facteur -> ENTIER .)
 
 
 state 21
 
-    (18) expr -> expr - . produit
-    (12) produit -> . produit % facteur
-    (13) produit -> . produit / facteur
-    (14) produit -> . produit * facteur
-    (15) produit -> . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (6) ecrire -> ECRIRE ( expr . ) ;
+    (19) expr -> expr . - produit
+    (20) expr -> expr . + produit
+    )               shift and go to state 42
+    -               shift and go to state 24
+    +               shift and go to state 25
 
-    produit                        shift and go to state 41
-    facteur                        shift and go to state 42
 
 state 22
 
-    (19) expr -> expr + . produit
-    (12) produit -> . produit % facteur
-    (13) produit -> . produit / facteur
-    (14) produit -> . produit * facteur
-    (15) produit -> . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (7) facteur -> IDENTIFIANT ( . exprList )
+    (8) facteur -> IDENTIFIANT ( . )
+    (22) exprList -> . expr , exprList
+    (23) exprList -> . expr
+    (17) expr -> . booleen
+    (18) expr -> . - facteur
+    (19) expr -> . expr - produit
+    (20) expr -> . expr + produit
+    (21) expr -> . produit
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (13) produit -> . produit % facteur
+    (14) produit -> . produit / facteur
+    (15) produit -> . produit * facteur
+    (16) produit -> . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    )               shift and go to state 44
+    -               shift and go to state 13
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
-    produit                        shift and go to state 43
-    facteur                        shift and go to state 42
+    exprList                       shift and go to state 43
+    expr                           shift and go to state 45
+    booleen                        shift and go to state 12
+    facteur                        shift and go to state 14
+    produit                        shift and go to state 15
 
 state 23
 
-    (29) booleen -> booleen OU . booleen
-    (23) booleen -> . facteur SUPERIEUR facteur
-    (24) booleen -> . facteur INFERIEUR facteur
-    (25) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (27) booleen -> . facteur NON_EGAL facteur
-    (28) booleen -> . facteur EGAL facteur
-    (29) booleen -> . booleen OU booleen
-    (30) booleen -> . booleen ET booleen
-    (31) booleen -> . NON booleen
-    (32) booleen -> . BOOLEEN
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    NON             shift and go to state 14
-    BOOLEEN         shift and go to state 15
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (4) instruction -> IDENTIFIANT = expr ; .
+    IDENTIFIANT     reduce using rule 4 (instruction -> IDENTIFIANT = expr ; .)
+    ECRIRE          reduce using rule 4 (instruction -> IDENTIFIANT = expr ; .)
+    $end            reduce using rule 4 (instruction -> IDENTIFIANT = expr ; .)
 
-    booleen                        shift and go to state 44
-    facteur                        shift and go to state 36
 
 state 24
 
-    (30) booleen -> booleen ET . booleen
-    (23) booleen -> . facteur SUPERIEUR facteur
-    (24) booleen -> . facteur INFERIEUR facteur
-    (25) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (27) booleen -> . facteur NON_EGAL facteur
-    (28) booleen -> . facteur EGAL facteur
-    (29) booleen -> . booleen OU booleen
-    (30) booleen -> . booleen ET booleen
-    (31) booleen -> . NON booleen
-    (32) booleen -> . BOOLEEN
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    NON             shift and go to state 14
-    BOOLEEN         shift and go to state 15
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (19) expr -> expr - . produit
+    (13) produit -> . produit % facteur
+    (14) produit -> . produit / facteur
+    (15) produit -> . produit * facteur
+    (16) produit -> . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
-    booleen                        shift and go to state 45
-    facteur                        shift and go to state 36
+    produit                        shift and go to state 46
+    facteur                        shift and go to state 47
 
 state 25
 
-    (17) expr -> - facteur .
-    )               reduce using rule 17 (expr -> - facteur .)
-    -               reduce using rule 17 (expr -> - facteur .)
-    +               reduce using rule 17 (expr -> - facteur .)
-    ,               reduce using rule 17 (expr -> - facteur .)
+    (20) expr -> expr + . produit
+    (13) produit -> . produit % facteur
+    (14) produit -> . produit / facteur
+    (15) produit -> . produit * facteur
+    (16) produit -> . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
+    produit                        shift and go to state 48
+    facteur                        shift and go to state 47
 
 state 26
 
-    (23) booleen -> facteur SUPERIEUR . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (30) booleen -> booleen OU . booleen
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
-    facteur                        shift and go to state 46
+    booleen                        shift and go to state 49
+    facteur                        shift and go to state 39
 
 state 27
 
-    (24) booleen -> facteur INFERIEUR . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (31) booleen -> booleen ET . booleen
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
-    facteur                        shift and go to state 47
+    booleen                        shift and go to state 50
+    facteur                        shift and go to state 39
 
 state 28
 
-    (25) booleen -> facteur SUPERIEUR_OU_EGAL . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (18) expr -> - facteur .
+    ;               reduce using rule 18 (expr -> - facteur .)
+    -               reduce using rule 18 (expr -> - facteur .)
+    +               reduce using rule 18 (expr -> - facteur .)
+    )               reduce using rule 18 (expr -> - facteur .)
+    ,               reduce using rule 18 (expr -> - facteur .)
 
-    facteur                        shift and go to state 48
 
 state 29
 
-    (26) booleen -> facteur INFERIEUR_OU_EGAL . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
-
-    facteur                        shift and go to state 49
-
-state 30
-
-    (27) booleen -> facteur NON_EGAL . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
-
-    facteur                        shift and go to state 50
-
-state 31
-
-    (28) booleen -> facteur EGAL . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (24) booleen -> facteur SUPERIEUR . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
     facteur                        shift and go to state 51
 
-state 32
+state 30
 
-    (12) produit -> produit % . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (25) booleen -> facteur INFERIEUR . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
     facteur                        shift and go to state 52
 
-state 33
+state 31
 
-    (13) produit -> produit / . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (26) booleen -> facteur SUPERIEUR_OU_EGAL . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
     facteur                        shift and go to state 53
 
-state 34
+state 32
 
-    (14) produit -> produit * . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (27) booleen -> facteur INFERIEUR_OU_EGAL . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
     facteur                        shift and go to state 54
 
+state 33
+
+    (28) booleen -> facteur NON_EGAL . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
+
+    facteur                        shift and go to state 55
+
+state 34
+
+    (29) booleen -> facteur EGAL . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
+
+    facteur                        shift and go to state 56
+
 state 35
 
-    (31) booleen -> NON booleen .
-    (29) booleen -> booleen . OU booleen
-    (30) booleen -> booleen . ET booleen
-  ! shift/reduce conflict for OU resolved as shift
-  ! shift/reduce conflict for ET resolved as shift
-    )               reduce using rule 31 (booleen -> NON booleen .)
-    -               reduce using rule 31 (booleen -> NON booleen .)
-    +               reduce using rule 31 (booleen -> NON booleen .)
-    ,               reduce using rule 31 (booleen -> NON booleen .)
-    OU              shift and go to state 23
-    ET              shift and go to state 24
+    (13) produit -> produit % . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
+    facteur                        shift and go to state 57
 
 state 36
 
-    (23) booleen -> facteur . SUPERIEUR facteur
-    (24) booleen -> facteur . INFERIEUR facteur
-    (25) booleen -> facteur . SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> facteur . INFERIEUR_OU_EGAL facteur
-    (27) booleen -> facteur . NON_EGAL facteur
-    (28) booleen -> facteur . EGAL facteur
-    SUPERIEUR       shift and go to state 26
-    INFERIEUR       shift and go to state 27
-    SUPERIEUR_OU_EGAL shift and go to state 28
-    INFERIEUR_OU_EGAL shift and go to state 29
-    NON_EGAL        shift and go to state 30
-    EGAL            shift and go to state 31
+    (14) produit -> produit / . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
+    facteur                        shift and go to state 58
 
 state 37
 
-    (6) facteur -> IDENTIFIANT ( . exprList )
-    (7) facteur -> IDENTIFIANT ( . )
-    (21) exprList -> . expr , exprList
-    (22) exprList -> . expr
-    (16) expr -> . booleen
-    (17) expr -> . - facteur
-    (18) expr -> . expr - produit
-    (19) expr -> . expr + produit
-    (20) expr -> . produit
-    (23) booleen -> . facteur SUPERIEUR facteur
-    (24) booleen -> . facteur INFERIEUR facteur
-    (25) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (27) booleen -> . facteur NON_EGAL facteur
-    (28) booleen -> . facteur EGAL facteur
-    (29) booleen -> . booleen OU booleen
-    (30) booleen -> . booleen ET booleen
-    (31) booleen -> . NON booleen
-    (32) booleen -> . BOOLEEN
-    (12) produit -> . produit % facteur
-    (13) produit -> . produit / facteur
-    (14) produit -> . produit * facteur
-    (15) produit -> . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    )               shift and go to state 56
-    -               shift and go to state 11
-    NON             shift and go to state 14
-    BOOLEEN         shift and go to state 15
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (15) produit -> produit * . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
 
-    exprList                       shift and go to state 55
-    expr                           shift and go to state 57
-    booleen                        shift and go to state 10
-    facteur                        shift and go to state 12
-    produit                        shift and go to state 13
+    facteur                        shift and go to state 59
 
 state 38
 
-    (8) facteur -> LIRE ( . )
-    )               shift and go to state 58
+    (32) booleen -> NON booleen .
+    (30) booleen -> booleen . OU booleen
+    (31) booleen -> booleen . ET booleen
+  ! shift/reduce conflict for OU resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+    ;               reduce using rule 32 (booleen -> NON booleen .)
+    -               reduce using rule 32 (booleen -> NON booleen .)
+    +               reduce using rule 32 (booleen -> NON booleen .)
+    )               reduce using rule 32 (booleen -> NON booleen .)
+    ,               reduce using rule 32 (booleen -> NON booleen .)
+    OU              shift and go to state 26
+    ET              shift and go to state 27
 
 
 state 39
 
-    (11) facteur -> ( expr ) .
-    SUPERIEUR       reduce using rule 11 (facteur -> ( expr ) .)
-    INFERIEUR       reduce using rule 11 (facteur -> ( expr ) .)
-    SUPERIEUR_OU_EGAL reduce using rule 11 (facteur -> ( expr ) .)
-    INFERIEUR_OU_EGAL reduce using rule 11 (facteur -> ( expr ) .)
-    NON_EGAL        reduce using rule 11 (facteur -> ( expr ) .)
-    EGAL            reduce using rule 11 (facteur -> ( expr ) .)
-    %               reduce using rule 11 (facteur -> ( expr ) .)
-    /               reduce using rule 11 (facteur -> ( expr ) .)
-    *               reduce using rule 11 (facteur -> ( expr ) .)
-    )               reduce using rule 11 (facteur -> ( expr ) .)
-    -               reduce using rule 11 (facteur -> ( expr ) .)
-    +               reduce using rule 11 (facteur -> ( expr ) .)
-    ,               reduce using rule 11 (facteur -> ( expr ) .)
-    OU              reduce using rule 11 (facteur -> ( expr ) .)
-    ET              reduce using rule 11 (facteur -> ( expr ) .)
+    (24) booleen -> facteur . SUPERIEUR facteur
+    (25) booleen -> facteur . INFERIEUR facteur
+    (26) booleen -> facteur . SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> facteur . INFERIEUR_OU_EGAL facteur
+    (28) booleen -> facteur . NON_EGAL facteur
+    (29) booleen -> facteur . EGAL facteur
+    SUPERIEUR       shift and go to state 29
+    INFERIEUR       shift and go to state 30
+    SUPERIEUR_OU_EGAL shift and go to state 31
+    INFERIEUR_OU_EGAL shift and go to state 32
+    NON_EGAL        shift and go to state 33
+    EGAL            shift and go to state 34
 
 
 state 40
 
-    (5) ecrire -> ECRIRE ( expr ) ; .
-    ECRIRE          reduce using rule 5 (ecrire -> ECRIRE ( expr ) ; .)
-    $end            reduce using rule 5 (ecrire -> ECRIRE ( expr ) ; .)
+    (12) facteur -> ( expr . )
+    (19) expr -> expr . - produit
+    (20) expr -> expr . + produit
+    )               shift and go to state 60
+    -               shift and go to state 24
+    +               shift and go to state 25
 
 
 state 41
 
-    (18) expr -> expr - produit .
-    (12) produit -> produit . % facteur
-    (13) produit -> produit . / facteur
-    (14) produit -> produit . * facteur
-    )               reduce using rule 18 (expr -> expr - produit .)
-    -               reduce using rule 18 (expr -> expr - produit .)
-    +               reduce using rule 18 (expr -> expr - produit .)
-    ,               reduce using rule 18 (expr -> expr - produit .)
-    %               shift and go to state 32
-    /               shift and go to state 33
-    *               shift and go to state 34
+    (9) facteur -> LIRE ( . )
+    )               shift and go to state 61
 
 
 state 42
 
-    (15) produit -> facteur .
-    %               reduce using rule 15 (produit -> facteur .)
-    /               reduce using rule 15 (produit -> facteur .)
-    *               reduce using rule 15 (produit -> facteur .)
-    )               reduce using rule 15 (produit -> facteur .)
-    -               reduce using rule 15 (produit -> facteur .)
-    +               reduce using rule 15 (produit -> facteur .)
-    ,               reduce using rule 15 (produit -> facteur .)
+    (6) ecrire -> ECRIRE ( expr ) . ;
+    ;               shift and go to state 62
 
 
 state 43
 
-    (19) expr -> expr + produit .
-    (12) produit -> produit . % facteur
-    (13) produit -> produit . / facteur
-    (14) produit -> produit . * facteur
-    )               reduce using rule 19 (expr -> expr + produit .)
-    -               reduce using rule 19 (expr -> expr + produit .)
-    +               reduce using rule 19 (expr -> expr + produit .)
-    ,               reduce using rule 19 (expr -> expr + produit .)
-    %               shift and go to state 32
-    /               shift and go to state 33
-    *               shift and go to state 34
+    (7) facteur -> IDENTIFIANT ( exprList . )
+    )               shift and go to state 63
 
 
 state 44
 
-    (29) booleen -> booleen OU booleen .
-    (29) booleen -> booleen . OU booleen
-    (30) booleen -> booleen . ET booleen
-  ! shift/reduce conflict for OU resolved as shift
-  ! shift/reduce conflict for ET resolved as shift
-    )               reduce using rule 29 (booleen -> booleen OU booleen .)
-    -               reduce using rule 29 (booleen -> booleen OU booleen .)
-    +               reduce using rule 29 (booleen -> booleen OU booleen .)
-    ,               reduce using rule 29 (booleen -> booleen OU booleen .)
-    OU              shift and go to state 23
-    ET              shift and go to state 24
+    (8) facteur -> IDENTIFIANT ( ) .
+    SUPERIEUR       reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    INFERIEUR       reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    SUPERIEUR_OU_EGAL reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    INFERIEUR_OU_EGAL reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    NON_EGAL        reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    EGAL            reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    %               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    /               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    *               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    ;               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    -               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    +               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    )               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    ,               reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    OU              reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
+    ET              reduce using rule 8 (facteur -> IDENTIFIANT ( ) .)
 
 
 state 45
 
-    (30) booleen -> booleen ET booleen .
-    (29) booleen -> booleen . OU booleen
-    (30) booleen -> booleen . ET booleen
-  ! shift/reduce conflict for OU resolved as shift
-  ! shift/reduce conflict for ET resolved as shift
-    )               reduce using rule 30 (booleen -> booleen ET booleen .)
-    -               reduce using rule 30 (booleen -> booleen ET booleen .)
-    +               reduce using rule 30 (booleen -> booleen ET booleen .)
-    ,               reduce using rule 30 (booleen -> booleen ET booleen .)
-    OU              shift and go to state 23
-    ET              shift and go to state 24
+    (22) exprList -> expr . , exprList
+    (23) exprList -> expr .
+    (19) expr -> expr . - produit
+    (20) expr -> expr . + produit
+    ,               shift and go to state 64
+    )               reduce using rule 23 (exprList -> expr .)
+    -               shift and go to state 24
+    +               shift and go to state 25
 
 
 state 46
 
-    (23) booleen -> facteur SUPERIEUR facteur .
-    OU              reduce using rule 23 (booleen -> facteur SUPERIEUR facteur .)
-    ET              reduce using rule 23 (booleen -> facteur SUPERIEUR facteur .)
-    )               reduce using rule 23 (booleen -> facteur SUPERIEUR facteur .)
-    -               reduce using rule 23 (booleen -> facteur SUPERIEUR facteur .)
-    +               reduce using rule 23 (booleen -> facteur SUPERIEUR facteur .)
-    ,               reduce using rule 23 (booleen -> facteur SUPERIEUR facteur .)
+    (19) expr -> expr - produit .
+    (13) produit -> produit . % facteur
+    (14) produit -> produit . / facteur
+    (15) produit -> produit . * facteur
+    ;               reduce using rule 19 (expr -> expr - produit .)
+    -               reduce using rule 19 (expr -> expr - produit .)
+    +               reduce using rule 19 (expr -> expr - produit .)
+    )               reduce using rule 19 (expr -> expr - produit .)
+    ,               reduce using rule 19 (expr -> expr - produit .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
 
 
 state 47
 
-    (24) booleen -> facteur INFERIEUR facteur .
-    OU              reduce using rule 24 (booleen -> facteur INFERIEUR facteur .)
-    ET              reduce using rule 24 (booleen -> facteur INFERIEUR facteur .)
-    )               reduce using rule 24 (booleen -> facteur INFERIEUR facteur .)
-    -               reduce using rule 24 (booleen -> facteur INFERIEUR facteur .)
-    +               reduce using rule 24 (booleen -> facteur INFERIEUR facteur .)
-    ,               reduce using rule 24 (booleen -> facteur INFERIEUR facteur .)
+    (16) produit -> facteur .
+    %               reduce using rule 16 (produit -> facteur .)
+    /               reduce using rule 16 (produit -> facteur .)
+    *               reduce using rule 16 (produit -> facteur .)
+    ;               reduce using rule 16 (produit -> facteur .)
+    -               reduce using rule 16 (produit -> facteur .)
+    +               reduce using rule 16 (produit -> facteur .)
+    )               reduce using rule 16 (produit -> facteur .)
+    ,               reduce using rule 16 (produit -> facteur .)
 
 
 state 48
 
-    (25) booleen -> facteur SUPERIEUR_OU_EGAL facteur .
-    OU              reduce using rule 25 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
-    ET              reduce using rule 25 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
-    )               reduce using rule 25 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
-    -               reduce using rule 25 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
-    +               reduce using rule 25 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
-    ,               reduce using rule 25 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
+    (20) expr -> expr + produit .
+    (13) produit -> produit . % facteur
+    (14) produit -> produit . / facteur
+    (15) produit -> produit . * facteur
+    ;               reduce using rule 20 (expr -> expr + produit .)
+    -               reduce using rule 20 (expr -> expr + produit .)
+    +               reduce using rule 20 (expr -> expr + produit .)
+    )               reduce using rule 20 (expr -> expr + produit .)
+    ,               reduce using rule 20 (expr -> expr + produit .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
 
 
 state 49
 
-    (26) booleen -> facteur INFERIEUR_OU_EGAL facteur .
-    OU              reduce using rule 26 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
-    ET              reduce using rule 26 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
-    )               reduce using rule 26 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
-    -               reduce using rule 26 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
-    +               reduce using rule 26 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
-    ,               reduce using rule 26 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
+    (30) booleen -> booleen OU booleen .
+    (30) booleen -> booleen . OU booleen
+    (31) booleen -> booleen . ET booleen
+  ! shift/reduce conflict for OU resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+    ;               reduce using rule 30 (booleen -> booleen OU booleen .)
+    -               reduce using rule 30 (booleen -> booleen OU booleen .)
+    +               reduce using rule 30 (booleen -> booleen OU booleen .)
+    )               reduce using rule 30 (booleen -> booleen OU booleen .)
+    ,               reduce using rule 30 (booleen -> booleen OU booleen .)
+    OU              shift and go to state 26
+    ET              shift and go to state 27
 
 
 state 50
 
-    (27) booleen -> facteur NON_EGAL facteur .
-    OU              reduce using rule 27 (booleen -> facteur NON_EGAL facteur .)
-    ET              reduce using rule 27 (booleen -> facteur NON_EGAL facteur .)
-    )               reduce using rule 27 (booleen -> facteur NON_EGAL facteur .)
-    -               reduce using rule 27 (booleen -> facteur NON_EGAL facteur .)
-    +               reduce using rule 27 (booleen -> facteur NON_EGAL facteur .)
-    ,               reduce using rule 27 (booleen -> facteur NON_EGAL facteur .)
+    (31) booleen -> booleen ET booleen .
+    (30) booleen -> booleen . OU booleen
+    (31) booleen -> booleen . ET booleen
+  ! shift/reduce conflict for OU resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+    ;               reduce using rule 31 (booleen -> booleen ET booleen .)
+    -               reduce using rule 31 (booleen -> booleen ET booleen .)
+    +               reduce using rule 31 (booleen -> booleen ET booleen .)
+    )               reduce using rule 31 (booleen -> booleen ET booleen .)
+    ,               reduce using rule 31 (booleen -> booleen ET booleen .)
+    OU              shift and go to state 26
+    ET              shift and go to state 27
 
 
 state 51
 
-    (28) booleen -> facteur EGAL facteur .
-    OU              reduce using rule 28 (booleen -> facteur EGAL facteur .)
-    ET              reduce using rule 28 (booleen -> facteur EGAL facteur .)
-    )               reduce using rule 28 (booleen -> facteur EGAL facteur .)
-    -               reduce using rule 28 (booleen -> facteur EGAL facteur .)
-    +               reduce using rule 28 (booleen -> facteur EGAL facteur .)
-    ,               reduce using rule 28 (booleen -> facteur EGAL facteur .)
+    (24) booleen -> facteur SUPERIEUR facteur .
+    OU              reduce using rule 24 (booleen -> facteur SUPERIEUR facteur .)
+    ET              reduce using rule 24 (booleen -> facteur SUPERIEUR facteur .)
+    ;               reduce using rule 24 (booleen -> facteur SUPERIEUR facteur .)
+    -               reduce using rule 24 (booleen -> facteur SUPERIEUR facteur .)
+    +               reduce using rule 24 (booleen -> facteur SUPERIEUR facteur .)
+    )               reduce using rule 24 (booleen -> facteur SUPERIEUR facteur .)
+    ,               reduce using rule 24 (booleen -> facteur SUPERIEUR facteur .)
 
 
 state 52
 
-    (12) produit -> produit % facteur .
-    %               reduce using rule 12 (produit -> produit % facteur .)
-    /               reduce using rule 12 (produit -> produit % facteur .)
-    *               reduce using rule 12 (produit -> produit % facteur .)
-    )               reduce using rule 12 (produit -> produit % facteur .)
-    -               reduce using rule 12 (produit -> produit % facteur .)
-    +               reduce using rule 12 (produit -> produit % facteur .)
-    ,               reduce using rule 12 (produit -> produit % facteur .)
+    (25) booleen -> facteur INFERIEUR facteur .
+    OU              reduce using rule 25 (booleen -> facteur INFERIEUR facteur .)
+    ET              reduce using rule 25 (booleen -> facteur INFERIEUR facteur .)
+    ;               reduce using rule 25 (booleen -> facteur INFERIEUR facteur .)
+    -               reduce using rule 25 (booleen -> facteur INFERIEUR facteur .)
+    +               reduce using rule 25 (booleen -> facteur INFERIEUR facteur .)
+    )               reduce using rule 25 (booleen -> facteur INFERIEUR facteur .)
+    ,               reduce using rule 25 (booleen -> facteur INFERIEUR facteur .)
 
 
 state 53
 
-    (13) produit -> produit / facteur .
-    %               reduce using rule 13 (produit -> produit / facteur .)
-    /               reduce using rule 13 (produit -> produit / facteur .)
-    *               reduce using rule 13 (produit -> produit / facteur .)
-    )               reduce using rule 13 (produit -> produit / facteur .)
-    -               reduce using rule 13 (produit -> produit / facteur .)
-    +               reduce using rule 13 (produit -> produit / facteur .)
-    ,               reduce using rule 13 (produit -> produit / facteur .)
+    (26) booleen -> facteur SUPERIEUR_OU_EGAL facteur .
+    OU              reduce using rule 26 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
+    ET              reduce using rule 26 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
+    ;               reduce using rule 26 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
+    -               reduce using rule 26 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
+    +               reduce using rule 26 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
+    )               reduce using rule 26 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
+    ,               reduce using rule 26 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
 
 
 state 54
 
-    (14) produit -> produit * facteur .
-    %               reduce using rule 14 (produit -> produit * facteur .)
-    /               reduce using rule 14 (produit -> produit * facteur .)
-    *               reduce using rule 14 (produit -> produit * facteur .)
-    )               reduce using rule 14 (produit -> produit * facteur .)
-    -               reduce using rule 14 (produit -> produit * facteur .)
-    +               reduce using rule 14 (produit -> produit * facteur .)
-    ,               reduce using rule 14 (produit -> produit * facteur .)
+    (27) booleen -> facteur INFERIEUR_OU_EGAL facteur .
+    OU              reduce using rule 27 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
+    ET              reduce using rule 27 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
+    ;               reduce using rule 27 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
+    -               reduce using rule 27 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
+    +               reduce using rule 27 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
+    )               reduce using rule 27 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
+    ,               reduce using rule 27 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
 
 
 state 55
 
-    (6) facteur -> IDENTIFIANT ( exprList . )
-    )               shift and go to state 59
+    (28) booleen -> facteur NON_EGAL facteur .
+    OU              reduce using rule 28 (booleen -> facteur NON_EGAL facteur .)
+    ET              reduce using rule 28 (booleen -> facteur NON_EGAL facteur .)
+    ;               reduce using rule 28 (booleen -> facteur NON_EGAL facteur .)
+    -               reduce using rule 28 (booleen -> facteur NON_EGAL facteur .)
+    +               reduce using rule 28 (booleen -> facteur NON_EGAL facteur .)
+    )               reduce using rule 28 (booleen -> facteur NON_EGAL facteur .)
+    ,               reduce using rule 28 (booleen -> facteur NON_EGAL facteur .)
 
 
 state 56
 
-    (7) facteur -> IDENTIFIANT ( ) .
-    SUPERIEUR       reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    INFERIEUR       reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    SUPERIEUR_OU_EGAL reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    INFERIEUR_OU_EGAL reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    NON_EGAL        reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    EGAL            reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    %               reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    /               reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    *               reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    )               reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    -               reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    +               reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    ,               reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    OU              reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
-    ET              reduce using rule 7 (facteur -> IDENTIFIANT ( ) .)
+    (29) booleen -> facteur EGAL facteur .
+    OU              reduce using rule 29 (booleen -> facteur EGAL facteur .)
+    ET              reduce using rule 29 (booleen -> facteur EGAL facteur .)
+    ;               reduce using rule 29 (booleen -> facteur EGAL facteur .)
+    -               reduce using rule 29 (booleen -> facteur EGAL facteur .)
+    +               reduce using rule 29 (booleen -> facteur EGAL facteur .)
+    )               reduce using rule 29 (booleen -> facteur EGAL facteur .)
+    ,               reduce using rule 29 (booleen -> facteur EGAL facteur .)
 
 
 state 57
 
-    (21) exprList -> expr . , exprList
-    (22) exprList -> expr .
-    (18) expr -> expr . - produit
-    (19) expr -> expr . + produit
-    ,               shift and go to state 60
-    )               reduce using rule 22 (exprList -> expr .)
-    -               shift and go to state 21
-    +               shift and go to state 22
+    (13) produit -> produit % facteur .
+    %               reduce using rule 13 (produit -> produit % facteur .)
+    /               reduce using rule 13 (produit -> produit % facteur .)
+    *               reduce using rule 13 (produit -> produit % facteur .)
+    ;               reduce using rule 13 (produit -> produit % facteur .)
+    -               reduce using rule 13 (produit -> produit % facteur .)
+    +               reduce using rule 13 (produit -> produit % facteur .)
+    )               reduce using rule 13 (produit -> produit % facteur .)
+    ,               reduce using rule 13 (produit -> produit % facteur .)
 
 
 state 58
 
-    (8) facteur -> LIRE ( ) .
-    SUPERIEUR       reduce using rule 8 (facteur -> LIRE ( ) .)
-    INFERIEUR       reduce using rule 8 (facteur -> LIRE ( ) .)
-    SUPERIEUR_OU_EGAL reduce using rule 8 (facteur -> LIRE ( ) .)
-    INFERIEUR_OU_EGAL reduce using rule 8 (facteur -> LIRE ( ) .)
-    NON_EGAL        reduce using rule 8 (facteur -> LIRE ( ) .)
-    EGAL            reduce using rule 8 (facteur -> LIRE ( ) .)
-    %               reduce using rule 8 (facteur -> LIRE ( ) .)
-    /               reduce using rule 8 (facteur -> LIRE ( ) .)
-    *               reduce using rule 8 (facteur -> LIRE ( ) .)
-    )               reduce using rule 8 (facteur -> LIRE ( ) .)
-    -               reduce using rule 8 (facteur -> LIRE ( ) .)
-    +               reduce using rule 8 (facteur -> LIRE ( ) .)
-    ,               reduce using rule 8 (facteur -> LIRE ( ) .)
-    OU              reduce using rule 8 (facteur -> LIRE ( ) .)
-    ET              reduce using rule 8 (facteur -> LIRE ( ) .)
+    (14) produit -> produit / facteur .
+    %               reduce using rule 14 (produit -> produit / facteur .)
+    /               reduce using rule 14 (produit -> produit / facteur .)
+    *               reduce using rule 14 (produit -> produit / facteur .)
+    ;               reduce using rule 14 (produit -> produit / facteur .)
+    -               reduce using rule 14 (produit -> produit / facteur .)
+    +               reduce using rule 14 (produit -> produit / facteur .)
+    )               reduce using rule 14 (produit -> produit / facteur .)
+    ,               reduce using rule 14 (produit -> produit / facteur .)
 
 
 state 59
 
-    (6) facteur -> IDENTIFIANT ( exprList ) .
-    SUPERIEUR       reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    INFERIEUR       reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    SUPERIEUR_OU_EGAL reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    INFERIEUR_OU_EGAL reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    NON_EGAL        reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    EGAL            reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    %               reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    /               reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    *               reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    )               reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    -               reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    +               reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    ,               reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    OU              reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
-    ET              reduce using rule 6 (facteur -> IDENTIFIANT ( exprList ) .)
+    (15) produit -> produit * facteur .
+    %               reduce using rule 15 (produit -> produit * facteur .)
+    /               reduce using rule 15 (produit -> produit * facteur .)
+    *               reduce using rule 15 (produit -> produit * facteur .)
+    ;               reduce using rule 15 (produit -> produit * facteur .)
+    -               reduce using rule 15 (produit -> produit * facteur .)
+    +               reduce using rule 15 (produit -> produit * facteur .)
+    )               reduce using rule 15 (produit -> produit * facteur .)
+    ,               reduce using rule 15 (produit -> produit * facteur .)
 
 
 state 60
 
-    (21) exprList -> expr , . exprList
-    (21) exprList -> . expr , exprList
-    (22) exprList -> . expr
-    (16) expr -> . booleen
-    (17) expr -> . - facteur
-    (18) expr -> . expr - produit
-    (19) expr -> . expr + produit
-    (20) expr -> . produit
-    (23) booleen -> . facteur SUPERIEUR facteur
-    (24) booleen -> . facteur INFERIEUR facteur
-    (25) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (26) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (27) booleen -> . facteur NON_EGAL facteur
-    (28) booleen -> . facteur EGAL facteur
-    (29) booleen -> . booleen OU booleen
-    (30) booleen -> . booleen ET booleen
-    (31) booleen -> . NON booleen
-    (32) booleen -> . BOOLEEN
-    (12) produit -> . produit % facteur
-    (13) produit -> . produit / facteur
-    (14) produit -> . produit * facteur
-    (15) produit -> . facteur
-    (6) facteur -> . IDENTIFIANT ( exprList )
-    (7) facteur -> . IDENTIFIANT ( )
-    (8) facteur -> . LIRE ( )
-    (9) facteur -> . IDENTIFIANT
-    (10) facteur -> . ENTIER
-    (11) facteur -> . ( expr )
-    -               shift and go to state 11
-    NON             shift and go to state 14
-    BOOLEEN         shift and go to state 15
-    IDENTIFIANT     shift and go to state 16
-    LIRE            shift and go to state 17
-    ENTIER          shift and go to state 18
-    (               shift and go to state 8
+    (12) facteur -> ( expr ) .
+    SUPERIEUR       reduce using rule 12 (facteur -> ( expr ) .)
+    INFERIEUR       reduce using rule 12 (facteur -> ( expr ) .)
+    SUPERIEUR_OU_EGAL reduce using rule 12 (facteur -> ( expr ) .)
+    INFERIEUR_OU_EGAL reduce using rule 12 (facteur -> ( expr ) .)
+    NON_EGAL        reduce using rule 12 (facteur -> ( expr ) .)
+    EGAL            reduce using rule 12 (facteur -> ( expr ) .)
+    %               reduce using rule 12 (facteur -> ( expr ) .)
+    /               reduce using rule 12 (facteur -> ( expr ) .)
+    *               reduce using rule 12 (facteur -> ( expr ) .)
+    ;               reduce using rule 12 (facteur -> ( expr ) .)
+    -               reduce using rule 12 (facteur -> ( expr ) .)
+    +               reduce using rule 12 (facteur -> ( expr ) .)
+    )               reduce using rule 12 (facteur -> ( expr ) .)
+    ,               reduce using rule 12 (facteur -> ( expr ) .)
+    OU              reduce using rule 12 (facteur -> ( expr ) .)
+    ET              reduce using rule 12 (facteur -> ( expr ) .)
 
-    expr                           shift and go to state 57
-    exprList                       shift and go to state 61
-    booleen                        shift and go to state 10
-    facteur                        shift and go to state 12
-    produit                        shift and go to state 13
 
 state 61
 
-    (21) exprList -> expr , exprList .
-    )               reduce using rule 21 (exprList -> expr , exprList .)
+    (9) facteur -> LIRE ( ) .
+    SUPERIEUR       reduce using rule 9 (facteur -> LIRE ( ) .)
+    INFERIEUR       reduce using rule 9 (facteur -> LIRE ( ) .)
+    SUPERIEUR_OU_EGAL reduce using rule 9 (facteur -> LIRE ( ) .)
+    INFERIEUR_OU_EGAL reduce using rule 9 (facteur -> LIRE ( ) .)
+    NON_EGAL        reduce using rule 9 (facteur -> LIRE ( ) .)
+    EGAL            reduce using rule 9 (facteur -> LIRE ( ) .)
+    %               reduce using rule 9 (facteur -> LIRE ( ) .)
+    /               reduce using rule 9 (facteur -> LIRE ( ) .)
+    *               reduce using rule 9 (facteur -> LIRE ( ) .)
+    ;               reduce using rule 9 (facteur -> LIRE ( ) .)
+    -               reduce using rule 9 (facteur -> LIRE ( ) .)
+    +               reduce using rule 9 (facteur -> LIRE ( ) .)
+    )               reduce using rule 9 (facteur -> LIRE ( ) .)
+    ,               reduce using rule 9 (facteur -> LIRE ( ) .)
+    OU              reduce using rule 9 (facteur -> LIRE ( ) .)
+    ET              reduce using rule 9 (facteur -> LIRE ( ) .)
+
+
+state 62
+
+    (6) ecrire -> ECRIRE ( expr ) ; .
+    IDENTIFIANT     reduce using rule 6 (ecrire -> ECRIRE ( expr ) ; .)
+    ECRIRE          reduce using rule 6 (ecrire -> ECRIRE ( expr ) ; .)
+    $end            reduce using rule 6 (ecrire -> ECRIRE ( expr ) ; .)
+
+
+state 63
+
+    (7) facteur -> IDENTIFIANT ( exprList ) .
+    SUPERIEUR       reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    INFERIEUR       reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    SUPERIEUR_OU_EGAL reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    INFERIEUR_OU_EGAL reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    NON_EGAL        reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    EGAL            reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    %               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    /               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    *               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    ;               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    -               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    +               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    )               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    ,               reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    OU              reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+    ET              reduce using rule 7 (facteur -> IDENTIFIANT ( exprList ) .)
+
+
+state 64
+
+    (22) exprList -> expr , . exprList
+    (22) exprList -> . expr , exprList
+    (23) exprList -> . expr
+    (17) expr -> . booleen
+    (18) expr -> . - facteur
+    (19) expr -> . expr - produit
+    (20) expr -> . expr + produit
+    (21) expr -> . produit
+    (24) booleen -> . facteur SUPERIEUR facteur
+    (25) booleen -> . facteur INFERIEUR facteur
+    (26) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
+    (27) booleen -> . facteur INFERIEUR_OU_EGAL facteur
+    (28) booleen -> . facteur NON_EGAL facteur
+    (29) booleen -> . facteur EGAL facteur
+    (30) booleen -> . booleen OU booleen
+    (31) booleen -> . booleen ET booleen
+    (32) booleen -> . NON booleen
+    (33) booleen -> . BOOLEEN
+    (13) produit -> . produit % facteur
+    (14) produit -> . produit / facteur
+    (15) produit -> . produit * facteur
+    (16) produit -> . facteur
+    (7) facteur -> . IDENTIFIANT ( exprList )
+    (8) facteur -> . IDENTIFIANT ( )
+    (9) facteur -> . LIRE ( )
+    (10) facteur -> . IDENTIFIANT
+    (11) facteur -> . ENTIER
+    (12) facteur -> . ( expr )
+    -               shift and go to state 13
+    NON             shift and go to state 16
+    BOOLEEN         shift and go to state 17
+    IDENTIFIANT     shift and go to state 10
+    LIRE            shift and go to state 19
+    ENTIER          shift and go to state 20
+    (               shift and go to state 18
+
+    expr                           shift and go to state 45
+    exprList                       shift and go to state 65
+    booleen                        shift and go to state 12
+    facteur                        shift and go to state 14
+    produit                        shift and go to state 15
+
+state 65
+
+    (22) exprList -> expr , exprList .
+    )               reduce using rule 22 (exprList -> expr , exprList .)
 
 
 Conflicts:
 
-shift/reduce conflict for OU in state 35 resolved as shift
-shift/reduce conflict for ET in state 35 resolved as shift
-shift/reduce conflict for OU in state 44 resolved as shift
-shift/reduce conflict for ET in state 44 resolved as shift
-shift/reduce conflict for OU in state 45 resolved as shift
-shift/reduce conflict for ET in state 45 resolved as shift
+shift/reduce conflict for OU in state 38 resolved as shift
+shift/reduce conflict for ET in state 38 resolved as shift
+shift/reduce conflict for OU in state 49 resolved as shift
+shift/reduce conflict for ET in state 49 resolved as shift
+shift/reduce conflict for OU in state 50 resolved as shift
+shift/reduce conflict for ET in state 50 resolved as shift

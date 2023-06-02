@@ -16,6 +16,7 @@ class Programme:
         self.listeInstructions.afficher(indent + 1)
         afficher("</programme>", indent)
 
+
 class Operation:
     def __init__(self, operateur, exp1, exp2):
         self.operateur = operateur
@@ -49,8 +50,6 @@ class Ecrire:
         afficher("<ecrire>", indent)
         self.exp.afficher(indent + 1)
         afficher("</ecrire>", indent)
-
-
 
 
 class Entier:
@@ -113,7 +112,6 @@ class Booleen:
         self.valeur = valeur
 
     def afficher(self, indent=0):
-
         print("[Booleen:" + str(self.valeur) + "]" + " " * indent)
 
     def evaluer(self):
@@ -133,6 +131,19 @@ class BooleenOperation:
         self.operande_droit.afficher(indent + 1)
         afficher("</booleenOperation>", indent)
 
+
+class Declaration:
+    def __init__(self, type_, identifiant):
+        self.type = type_
+        self.identifiant = identifiant
+
+    def afficher(self, indent=0):
+        afficher("<declaration>", indent)
+        afficher(self.type, indent + 1)
+        afficher(self.identifiant, indent + 1)
+        afficher("</declaration>", indent)
+
+
 class Affectation:
     def __init__(self, variable, expression):
         self.variable = variable
@@ -140,7 +151,6 @@ class Affectation:
 
     def afficher(self, indent=0):
         afficher("<affectation>", indent)
-        self.variable.afficher(indent + 1)
+        afficher(self.variable, indent + 1)
         self.expression.afficher(indent + 1)
         afficher("</affectation>", indent)
-
