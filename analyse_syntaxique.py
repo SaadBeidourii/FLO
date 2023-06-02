@@ -7,11 +7,11 @@ import arbre_abstrait
 
 
 class FloParser(Parser):
-    # On récupère la liste des lexèmes de l'analyse lexicale
+    # Get the list of tokens from the lexical analysis
     tokens = FloLexer.tokens
     debugfile = 'parser.out'
 
-    # Règles grammaticales et actions associées
+    # Grammar rules and associated actions
 
     @_('prog')
     def start(self, p):
@@ -81,7 +81,7 @@ class FloParser(Parser):
     def sinon(self, p):
         return arbre_abstrait.Sinon(p.listeInstructions)
 
-    @_('TANTQUE "(" expression ")" "{" listeInstructions "}"')
+    @_('TANT_QUE "(" expression ")" "{" listeInstructions "}"')
     def instruction(self, p):
         return arbre_abstrait.InstructionBoucleTantQue(p.expression, p.listeInstructions)
 
@@ -105,13 +105,9 @@ class FloParser(Parser):
     def expression(self, p):
         return arbre_abstrait.Entier(p.ENTIER)
 
-    @_('VRAI')
+    @_('BOOLEEN')
     def expression(self, p):
-        return arbre_abstrait.Bool(True)
-
-    @_('FAUX')
-    def expression(self, p):
-        return arbre_abstrait.Bool(False)
+        return arbre_abstrait.Bool(p.BOOLEEN)
 
     @_('LIRE "(" ")"')
     def expression(self, p):
@@ -135,7 +131,8 @@ if __name__ == '__main__':
         with open(sys.argv[1], "r") as f:
             data = f.read()
             try:
-                arbre = parser.parse(lexer.tokenize(data))
+                tokens = lexer.tokenize(data)
+                arbre = parser.parse(tokens)
                 arbre.afficher()
             except EOFError:
                 exit()
