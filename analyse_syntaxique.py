@@ -64,62 +64,17 @@ class FloParser(Parser):
     def instruction(self, p):
         return arbre_abstrait.InstructionConditionnelle(p.expression, p.listeInstructions)
 
-    @_('SI "(" expression ")" "{" listeInstructions "}" sinon')
+    @_('SI "(" expression ")" "{" listeInstructions "}" SINON SI "(" expression ")" "{" listeInstructions "}"')
     def instruction(self, p):
-        return arbre_abstrait.InstructionConditionnelle(p.expression, p.listeInstructions, p.sinon)
+        return arbre_abstrait.InstructionConditionnelle(p.expression, p.listeInstructions, [(p.expression2, p.listeInstructions2)])
 
-    @_('SINON SI "(" expression ")" "{" listeInstructions "}"')
-    def sinon(self, p):
-        return [(p.expression, p.listeInstructions)]
-
-    @_('sinon SINON SI "(" expression ")" "{" listeInstructions "}"')
-    def sinon(self, p):
-        p.sinon.append((p.expression, p.listeInstructions))
-        return p.sinon
-
-    @_('SINON "{" listeInstructions "}"')
-    def sinon(self, p):
-        return arbre_abstrait.Sinon(p.listeInstructions)
+    @_('SI "(" expression ")" "{" listeInstructions "}" SINON "{" listeInstructions "}"')
+    def instruction(self, p):
+        return arbre_abstrait.InstructionConditionnelle(p.expression, p.listeInstructions, p.listeInstructions2)
 
     @_('TANT_QUE "(" expression ")" "{" listeInstructions "}"')
     def instruction(self, p):
         return arbre_abstrait.InstructionBoucleTantQue(p.expression, p.listeInstructions)
-
-    @_('RETOURNER expression ";"')
-    def instruction(self, p):
-        return arbre_abstrait.InstructionRetourner(p.expression)
-
-    @_('IDENTIFIANT "(" ")"')
-    def expression(self, p):
-        return arbre_abstrait.AppelFonction(p.IDENTIFIANT, [])
-
-    @_('IDENTIFIANT "(" exprList ")"')
-    def expression(self, p):
-        return arbre_abstrait.AppelFonction(p.IDENTIFIANT, p.exprList)
-
-    @_('IDENTIFIANT')
-    def expression(self, p):
-        return arbre_abstrait.Variable(p.IDENTIFIANT)
-
-    @_('ENTIER')
-    def expression(self, p):
-        return arbre_abstrait.Entier(p.ENTIER)
-
-    @_('BOOLEEN')
-    def expression(self, p):
-        return arbre_abstrait.Bool(p.BOOLEEN)
-
-    @_('LIRE "(" ")"')
-    def expression(self, p):
-        return arbre_abstrait.Lire()
-
-    @_('expression')
-    def exprList(self, p):
-        return arbre_abstrait.ExprList(p.expression)
-
-    @_('expression "," exprList')
-    def exprList(self, p):
-        return arbre_abstrait.ExprList(p.expression, p.exprList)
 
 
 if __name__ == '__main__':
@@ -131,8 +86,7 @@ if __name__ == '__main__':
         with open(sys.argv[1], "r") as f:
             data = f.read()
             try:
-                tokens = lexer.tokenize(data)
-                arbre = parser.parse(tokens)
+                arbre = parser.parse(lexer.tokenize(data))
                 arbre.afficher()
             except EOFError:
                 exit()
