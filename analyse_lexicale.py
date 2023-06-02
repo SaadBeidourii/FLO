@@ -5,12 +5,12 @@ from sly import Lexer
 class FloLexer(Lexer):
     # Noms des lexèmes (sauf les litéraux). En majuscule. Ordre non important
     tokens = {IDENTIFIANT, ENTIER, ECRIRE, INFERIEUR_OU_EGAL, LIRE, SI, SINON, TANT_QUE,
-              RETOURNER, EGAL, SUPERIEUR_OU_EGAL, BOOLEEN, NON_EGAL, ET, OU, NON, FAUX, VRAI, RETOURNER,INFERIEURE,SUPERIEURE}
+              RETOURNER, EGAL, SUPERIEUR_OU_EGAL, BOOLEEN, NON_EGAL, ET, OU, NON, FAUX, VRAI, RETOURNER,INFERIEUR,SUPERIEUR}
 
     # Les caractères litéraux sont des caractères uniques qui sont retournés tel quel quand rencontré par l'analyse lexicale.
     # Les litéraux sont vérifiés en dernier, après toutes les autres règles définies par des expressions régulières.
     # Donc, si une règle commence par un de ces littérals (comme INFERIEUR_OU_EGAL), cette règle aura la priorité.
-    literals = {'+', '*', '(', ')', ";", '{', '}', '=', '<', '>', '!', '/', '%', '-'}
+    literals = {'+', '*', '(', ')', ";", '{', '}', '=', '!', '/', '%', '-'}
 
     # chaines contenant les caractère à ignorer. Ici espace et tabulation
     ignore = ' \t'

@@ -137,12 +137,15 @@ class FloParser(Parser):
     @_('facteur SUPERIEUR_OU_EGAL facteur')
     def booleen(self, p):
         return arbre_abstrait.BooleenOperation('SUPERIEUR_OU_EGAL', p[0], p[2])
+
     @_('facteur INFERIEUR facteur')
     def booleen(self, p):
         return arbre_abstrait.BooleenOperation('INFERIEUR', p[0], p[2])
+
     @_('facteur SUPERIEUR facteur')
     def booleen(self, p):
         return arbre_abstrait.BooleenOperation('SUPERIEUR', p[0], p[2])
+
 
 if __name__ == '__main__':
     lexer = FloLexer()

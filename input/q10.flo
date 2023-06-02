@@ -1,2 +1,4 @@
 ecrire ( 3 == 4 );
 ecrire ( (2 + 9) <= 6 );
+ecrire ( 3 < 6 );
+ecrire ( 10 > 6 );
