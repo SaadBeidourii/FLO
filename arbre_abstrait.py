@@ -133,3 +133,14 @@ class BooleenOperation:
         self.operande_droit.afficher(indent + 1)
         afficher("</booleenOperation>", indent)
 
+class Affectation:
+    def __init__(self, variable, expression):
+        self.variable = variable
+        self.expression = expression
+
+    def afficher(self, indent=0):
+        afficher("<affectation>", indent)
+        self.variable.afficher(indent + 1)
+        self.expression.afficher(indent + 1)
+        afficher("</affectation>", indent)
+

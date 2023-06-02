@@ -146,6 +146,10 @@ class FloParser(Parser):
     def booleen(self, p):
         return arbre_abstrait.BooleenOperation('SUPERIEUR', p[0], p[2])
 
+    @_('IDENTIFIANT "=" expr ";"')
+    def instruction(self, p):
+        return arbre_abstrait.Affectation(p.IDENTIFIANT, p.expr)
+
 
 if __name__ == '__main__':
     lexer = FloLexer()
