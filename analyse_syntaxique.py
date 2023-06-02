@@ -103,7 +103,7 @@ class FloParser(Parser):
 
     @_('BOOLEEN')
     def booleen(self, p):
-        return arbre_abstrait.Booleen(p.BOOLEEN)  # vous devrez définir la classe Booleen dans votre arbre abstrait.
+        return arbre_abstrait.Booleen(p.BOOLEEN)
 
     @_('NON booleen')
     def booleen(self, p):
@@ -117,22 +117,22 @@ class FloParser(Parser):
     def expr(self, p):
         return arbre_abstrait.Operation('OU', p[0], p[2])
 
-    # En supposant que vous avez également des opérations de comparaison
-    @_('booleen EGAL booleen')
-    def expr(self, p):
+    @_('expr EGAL expr')
+    def booleen(self, p):
         return arbre_abstrait.Operation('EGAL', p[0], p[2])
 
-    @_('booleen NON_EGAL booleen')
-    def expr(self, p):
+    @_('expr NON_EGAL expr')
+    def booleen(self, p):
         return arbre_abstrait.Operation('NON_EGAL', p[0], p[2])
 
-    @_('booleen INFERIEUR_OU_EGAL booleen')
-    def expr(self, p):
+    @_('expr INFERIEUR_OU_EGAL expr')
+    def booleen(self, p):
         return arbre_abstrait.Operation('INFERIEUR_OU_EGAL', p[0], p[2])
 
-    @_('booleen SUPERIEUR_OU_EGAL booleen')
-    def expr(self, p):
+    @_('expr SUPERIEUR_OU_EGAL expr')
+    def booleen(self, p):
         return arbre_abstrait.Operation('SUPERIEUR_OU_EGAL', p[0], p[2])
+
 
 
 if __name__ == '__main__':

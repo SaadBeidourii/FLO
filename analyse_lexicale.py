@@ -15,11 +15,6 @@ class FloLexer(Lexer):
     # chaines contenant les caractère à ignorer. Ici espace et tabulation
     ignore = ' \t'
 
-    # Expressions régulières correspondant au différents Lexèmes par ordre de priorité
-    INFERIEUR_OU_EGAL = r'<='
-    SUPERIEUR_OU_EGAL = r'>='
-    EGAL = r'=='
-    NON_EGAL = r'!='
 
     @_(r'0|[1-9][0-9]*')
     def ENTIER(self, t):
@@ -34,7 +29,12 @@ class FloLexer(Lexer):
     IDENTIFIANT['Faux'] = BOOLEEN
     IDENTIFIANT['et'] = ET
     IDENTIFIANT['ou'] = OU
-    IDENTIFIANT['!'] = NON
+    IDENTIFIANT['non'] = NON
+
+    IDENTIFIANT['<='] = INFERIEUR_OU_EGAL
+    IDENTIFIANT['=='] = EGAL
+    IDENTIFIANT['>='] = SUPERIEUR_OU_EGAL
+    IDENTIFIANT['!='] = NON_EGAL
 
     # cas spéciaux:
     IDENTIFIANT['ecrire'] = ECRIRE
