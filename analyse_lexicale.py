@@ -10,11 +10,10 @@ class FloLexer(Lexer):
     # Les caractères litéraux sont des caractères uniques qui sont retournés tel quel quand rencontré par l'analyse lexicale.
     # Les litéraux sont vérifiés en dernier, après toutes les autres règles définies par des expressions régulières.
     # Donc, si une règle commence par un de ces littérals (comme INFERIEUR_OU_EGAL), cette règle aura la priorité.
-    literals = {'+', '*', '(', ')', ";", '{', '}', '=', '<', '>', '!', '/', '%', '-',","}
+    literals = {'+', '*', '(', ')', ";", '{', '}', '=', '<', '>', '!', '/', '%', '-'}
 
     # chaines contenant les caractère à ignorer. Ici espace et tabulation
     ignore = ' \t'
-
 
     @_(r'0|[1-9][0-9]*')
     def ENTIER(self, t):
@@ -29,17 +28,15 @@ class FloLexer(Lexer):
     IDENTIFIANT['Faux'] = BOOLEEN
     IDENTIFIANT['et'] = ET
     IDENTIFIANT['ou'] = OU
-    IDENTIFIANT['non'] = NON
-
-    IDENTIFIANT['<='] = INFERIEUR_OU_EGAL
-    IDENTIFIANT['=='] = EGAL
-    IDENTIFIANT['>='] = SUPERIEUR_OU_EGAL
-    IDENTIFIANT['!='] = NON_EGAL
+    NON = r'!'
+    EGAL = r'=='
+    INFERIEUR_OU_EGAL = r'<='
+    SUPERIEUR_OU_EGAL = r'>='
+    NON_EGAL = r'!='
 
     # cas spéciaux:
     IDENTIFIANT['ecrire'] = ECRIRE
     IDENTIFIANT['booleen'] = BOOLEEN
-
 
     # Syntaxe des commentaires à ignorer
     ignore_comment = r'\#.*'

@@ -120,4 +120,16 @@ class Booleen:
         return self.valeur
 
 
+class BooleenOperation:
+    def __init__(self, operateur, operande_gauche, operande_droit):
+        self.operateur = operateur
+        self.operande_gauche = operande_gauche
+        self.operande_droit = operande_droit
+
+    def afficher(self, indent=0):
+        afficher("<booleenOperation>", indent)
+        afficher(self.operateur, indent + 1)
+        self.operande_gauche.afficher(indent + 1)
+        self.operande_droit.afficher(indent + 1)
+        afficher("</booleenOperation>", indent)
 

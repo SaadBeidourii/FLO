@@ -1,1 +1,2 @@
-ecrire( 3 == 2);
+ecrire ( 3 == 4 );
+ecrire ( (2 + 9) <= 6 );
