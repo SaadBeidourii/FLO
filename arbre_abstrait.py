@@ -38,18 +38,6 @@ class Ecrire:
         afficher("</ecrire>", indent)
 
 
-class Operation:
-    def __init__(self, op, exp1, exp2):
-        self.exp1 = exp1
-        self.op = op
-        self.exp2 = exp2
-
-    def afficher(self, indent=0):
-        afficher("<operation>", indent)
-        afficher(self.op, indent + 1)
-        self.exp1.afficher(indent + 1)
-        self.exp2.afficher(indent + 1)
-        afficher("</operation>", indent)
 
 
 class Entier:
@@ -112,11 +100,11 @@ class Booleen:
         self.valeur = valeur
 
     def afficher(self, indent=0):
+
         print("[Booleen:" + str(self.valeur) + "]" + " " * indent)
 
     def evaluer(self):
         return self.valeur
 
-    def __str__(self):
-        return str(self.valeur)
+
 
