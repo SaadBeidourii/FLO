@@ -28,13 +28,13 @@ class FloLexer(Lexer):
 
     # cas général
     IDENTIFIANT = r'[a-zA-Z][a-zA-Z0-9_]*'  # en général, variable ou nom de fonction
-    ID['si'] = SI
-    ID['tantque'] = TANT_QUE
-    ID['Vrai'] = BOOLEEN
-    ID['Faux'] = BOOLEEN
-    ID['et'] = ET
-    ID['ou'] = OU
-    ID['!'] = NON
+    IDENTIFIANT['si'] = SI
+    IDENTIFIANT['tantque'] = TANT_QUE
+    IDENTIFIANT['Vrai'] = BOOLEEN
+    IDENTIFIANT['Faux'] = BOOLEEN
+    IDENTIFIANT['et'] = ET
+    IDENTIFIANT['ou'] = OU
+    IDENTIFIANT['!'] = NON
 
     # cas spéciaux:
     IDENTIFIANT['ecrire'] = ECRIRE
