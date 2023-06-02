@@ -101,6 +101,39 @@ class FloParser(Parser):
     def exprList(self, p):
         return arbre_abstrait.ExprList(p.expr, p.exprList)
 
+    @_('BOOLEEN')
+    def booleen(self, p):
+        return arbre_abstrait.Booleen(p.BOOLEEN)  # vous devrez définir la classe Booleen dans votre arbre abstrait.
+
+    @_('NON booleen')
+    def booleen(self, p):
+        return arbre_abstrait.Operation('NON', p.booleen)
+
+    @_('expr ET expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('ET', p[0], p[2])
+
+    @_('expr OU expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('OU', p[0], p[2])
+
+    # En supposant que vous avez également des opérations de comparaison
+    @_('expr EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('EGAL', p[0], p[2])
+
+    @_('expr NON_EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('NON_EGAL', p[0], p[2])
+
+    @_('expr INFERIEUR_OU_EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('INFERIEUR_OU_EGAL', p[0], p[2])
+
+    @_('expr SUPERIEUR_OU_EGAL expr')
+    def expr(self, p):
+        return arbre_abstrait.Operation('SUPERIEUR_OU_EGAL', p[0], p[2])
+
 
 if __name__ == '__main__':
     lexer = FloLexer()
