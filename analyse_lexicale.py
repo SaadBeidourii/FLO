@@ -4,13 +4,14 @@ from sly import Lexer
 
 class FloLexer(Lexer):
     # Noms des lexèmes (sauf les litéraux). En majuscule. Ordre non important
-    tokens = {IDENTIFIANT, ENTIER, ECRIRE, INFERIEUR_OU_EGAL, LIRE, SI, SINON, TANT_QUE,
-              RETOURNER, EGAL, SUPERIEUR_OU_EGAL, BOOLEEN, NON_EGAL, ET, OU, NON, FAUX, VRAI, RETOURNER,INFERIEUR,SUPERIEUR}
+    tokens = {IDENTIFIANT, TYPE, ENTIER, ECRIRE, INFERIEUR_OU_EGAL, LIRE, SI, SINON,SINON_SI, TANT_QUE,
+              RETOURNER, EGAL, SUPERIEUR_OU_EGAL, BOOLEEN, NON_EGAL, ET, OU, NON, FAUX, VRAI, RETOURNER, INFERIEUR,
+              SUPERIEUR}
 
     # Les caractères litéraux sont des caractères uniques qui sont retournés tel quel quand rencontré par l'analyse lexicale.
     # Les litéraux sont vérifiés en dernier, après toutes les autres règles définies par des expressions régulières.
     # Donc, si une règle commence par un de ces littérals (comme INFERIEUR_OU_EGAL), cette règle aura la priorité.
-    literals = {'+', '*', '(', ')', ";", '{', '}', '=', '!', '/', '%', '-'}
+    literals = {'+', '*', '(', ')', ";", "-", "/", "%", ",", "{", "}", "="}
 
     # chaines contenant les caractère à ignorer. Ici espace et tabulation
     ignore = ' \t'
@@ -23,6 +24,8 @@ class FloLexer(Lexer):
     # cas général
     IDENTIFIANT = r'[a-zA-Z][a-zA-Z0-9_]*'  # en général, variable ou nom de fonction
     IDENTIFIANT['si'] = SI
+    IDENTIFIANT['sinon'] = SINON
+    IDENTIFIANT[r'sinon_si'] = SINON_SI
     IDENTIFIANT['tantque'] = TANT_QUE
     IDENTIFIANT['Vrai'] = BOOLEEN
     IDENTIFIANT['Faux'] = BOOLEEN
@@ -32,18 +35,23 @@ class FloLexer(Lexer):
     EGAL = r'=='
     INFERIEUR_OU_EGAL = r'<='
     SUPERIEUR_OU_EGAL = r'>='
-    INFERIEUR=r'<'
-    SUPERIEUR=r'>'
+    INFERIEUR = r'<'
+    SUPERIEUR = r'>'
     NON_EGAL = r'!='
 
     # cas spéciaux:
     IDENTIFIANT['ecrire'] = ECRIRE
-    IDENTIFIANT['booleen'] = BOOLEEN
+    IDENTIFIANT['booleen'] = TYPE
+    IDENTIFIANT['entier'] = TYPE
+
+
 
     # Syntaxe des commentaires à ignorer
     ignore_comment = r'\#.*'
 
-    # Permet de conserver les numéros de ligne. Utile pour les messages d'erreurs
+
+        # Permet de conserver les numéros de ligne. Utile pour les messages d'erreurs
+
     @_(r'\n+')
     def ignore_newline(self, t):
         self.lineno += t.value.count('\n')

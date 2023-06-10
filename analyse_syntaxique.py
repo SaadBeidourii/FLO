@@ -150,17 +150,49 @@ class FloParser(Parser):
     def instruction(self, p):
         return arbre_abstrait.Affectation(p.IDENTIFIANT, p.expr)
 
-    @_('TYPE IDENTIFIANT ";"')
+    @_('TYPE')
+    def type(self, p):
+        return arbre_abstrait.Type(p.TYPE)
+
+    @_('IDENTIFIANT')
+    def variable(self, p):
+        return arbre_abstrait.Variable(p[0])
+
+    @_('declaration')
+    def instruction(self, p):
+        return p[0]
+
+    @_('type IDENTIFIANT ";"')
     def declaration(self, p):
-        return arbre_abstrait.Declaration(p.TYPE, p.IDENTIFIANT)
+        return arbre_abstrait.Declaration(p.type, p.IDENTIFIANT)
 
-    @_('BOOLEEN')
-    def TYPE(self, p):
-        return 'booleen'
+    @_('declarationAffectation')
+    def instruction(self, p):
+        return p[0]
 
-    @_('ENTIER')
-    def TYPE(self, p):
-        return 'entier'
+    @_('type IDENTIFIANT "=" expr ";"')
+    def declarationAffectation(self, p):
+        return arbre_abstrait.DeclarationAffectation(p.type, p.IDENTIFIANT, p.expr)
+
+    @_('instructionConditionnelle')
+    def instruction(self, p):
+        return p[0]
+
+    @_('SI "(" expr ")" "{" listeInstructions "}"')
+    def instructionConditionnelle(self, p):
+        return arbre_abstrait.InstructionConditionnelle(p.expr, p.listeInstructions)
+
+    @_('SINON_SI "(" expr ")" "{" listeInstructions "}"')
+    def instructionConditionnelle(self, p):
+        return arbre_abstrait.SiNonSi(p.expr, p.listeInstructions)
+
+    @_('SINON "{" listeInstructions "}"')
+    def instructionConditionnelle(self, p):
+        return arbre_abstrait.Sinon(p.listeInstructions)
+
+    @_('TANT_QUE "(" expr ")" "{" listeInstructions "}"')
+    def instructionConditionnelle(self, p):
+        return arbre_abstrait.TantQue(p.expr, p.listeInstructions)
 
 
 if __name__ == '__main__':

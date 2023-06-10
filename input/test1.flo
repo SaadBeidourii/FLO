@@ -1,0 +1,24 @@
+
+entier x;
+booleen condition ;
+
+
+x = 10;
+condition = Vrai;
+
+si (6 < 7) {
+    ecrire(vrai);
+}
+sinon_si (7 < 8) {
+    ecrire(vrai);
+}
+sinon {
+    ecrire(faux);
+}
+
+
+tantque (Vrai) {
+    ecrire(8);
+    x = x + 1;
+    entier y = 7 ;
+}

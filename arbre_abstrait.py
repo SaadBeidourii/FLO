@@ -134,13 +134,13 @@ class BooleenOperation:
 
 class Declaration:
     def __init__(self, type_, identifiant):
-        self.type = type_
+        self.type_ = type_
         self.identifiant = identifiant
 
     def afficher(self, indent=0):
         afficher("<declaration>", indent)
-        afficher(self.type, indent + 1)
-        afficher(self.identifiant, indent + 1)
+        self.type_.afficher(indent + 1)
+        afficher(str(self.identifiant), indent + 1)
         afficher("</declaration>", indent)
 
 
@@ -154,3 +154,74 @@ class Affectation:
         afficher(self.variable, indent + 1)
         self.expression.afficher(indent + 1)
         afficher("</affectation>", indent)
+
+
+class Type:
+    def __init__(self, valeur):
+        self.valeur = valeur
+
+    def afficher(self, indent=0):
+        afficher("[Type:" + str(self.valeur) + "]", indent)
+
+
+class DeclarationAffectation:
+    def __init__(self, type_, identifiant, expr):
+        self.type_ = type_
+        self.identifiant = identifiant
+        self.expr = expr
+
+    def afficher(self, indent=0):
+        afficher("<declarationAffectation>", indent)
+        self.type_.afficher(indent + 1)
+        afficher(str(self.identifiant), indent + 1)
+        self.expr.afficher(indent + 1)
+        afficher("</declarationAffectation>", indent)
+
+
+class InstructionConditionnelle:
+    def __init__(self, expr, listeInstructions):
+        self.expr = expr
+        self.listeInstructions = listeInstructions
+
+    def afficher(self, indent=0):
+        afficher("<Si>", indent)
+        afficher("SI", indent + 1)
+        self.expr.afficher(indent + 2)
+        self.listeInstructions.afficher(indent + 1)
+        afficher("</Si>", indent)
+
+
+class SiNonSi:
+    def __init__(self, expr, listeInstructions):
+        self.expr = expr
+        self.listeInstructions = listeInstructions
+
+    def afficher(self, indent=0):
+        afficher("<Sinon Si>", indent)
+        afficher("SINON_SI", indent + 1)
+        self.expr.afficher(indent + 2)
+        self.listeInstructions.afficher(indent + 1)
+        afficher("</Sinon Si>", indent)
+
+
+class Sinon:
+    def __init__(self, listeInstructions):
+        self.listeInstructions = listeInstructions
+
+    def afficher(self, indent=0):
+        afficher("<Sinon>", indent)
+        afficher("SINON", indent + 1)
+        self.listeInstructions.afficher(indent + 1)
+        afficher("</Sinon>", indent)
+
+
+class TantQue:
+    def __init__(self, expr, listeInstructions):
+        self.expr = expr
+        self.listeInstructions = listeInstructions
+
+    def afficher(self, indent=0):
+        afficher("<Tant que>", indent)
+        self.expr.afficher(indent + 1)
+        self.listeInstructions.afficher(indent + 1)
+        afficher("</Tant que>", indent)
