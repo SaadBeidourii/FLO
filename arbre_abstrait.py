@@ -81,7 +81,7 @@ class AppelFonction:
 
     def afficher(self, indent=0):
         afficher("<appelFonction>", indent)
-        afficher(self.nomFonction, indent + 1)
+        afficher(str(self.nomFonction), indent + 1)
         for argument in self.arguments:
             argument.afficher(indent + 1)
         afficher("</appelFonction>", indent)
@@ -225,3 +225,22 @@ class TantQue:
         self.expr.afficher(indent + 1)
         self.listeInstructions.afficher(indent + 1)
         afficher("</Tant que>", indent)
+
+
+class InstructionRetourner:
+    def __init__(self, expression):
+        self.expression = expression
+
+    def afficher(self, indent=0):
+        afficher("<Retourner>", indent)
+        self.expression.afficher(indent + 1)
+        afficher("</Retourner>", indent)
+
+
+# Nouvelle règle pour l'appel de fonction ignoré
+class AppelFonctionIgnore:
+    def __init__(self, facteur):
+        self.facteur = facteur
+
+    def afficher(self, indent=0):
+        self.facteur.afficher(indent)

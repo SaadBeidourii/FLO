@@ -27,10 +27,12 @@ class FloLexer(Lexer):
     IDENTIFIANT['sinon'] = SINON
     IDENTIFIANT[r'sinon_si'] = SINON_SI
     IDENTIFIANT['tantque'] = TANT_QUE
+    IDENTIFIANT['retourner'] = RETOURNER
     IDENTIFIANT['Vrai'] = BOOLEEN
     IDENTIFIANT['Faux'] = BOOLEEN
     IDENTIFIANT['et'] = ET
     IDENTIFIANT['ou'] = OU
+
     NON = r'!'
     EGAL = r'=='
     INFERIEUR_OU_EGAL = r'<='

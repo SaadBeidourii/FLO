@@ -85,12 +85,21 @@ class FloParser(Parser):
     def facteur(self):
         return arbre_abstrait.Lire()
 
-    @_('IDENTIFIANT "(" ")"')
+    # Règles pour les appels de fonction
+    @_('appelFonction ";"')
+    def instruction(self, p):
+        return arbre_abstrait.AppelFonction(p.appelFonction.nomFonction, p.appelFonction.arguments)
+
+    @_('appelFonction')
     def facteur(self, p):
+        return p.appelFonction
+
+    @_('IDENTIFIANT "(" ")"')
+    def appelFonction(self, p):
         return arbre_abstrait.AppelFonction(p.IDENTIFIANT, [])
 
     @_('IDENTIFIANT "(" exprList ")"')
-    def facteur(self, p):
+    def appelFonction(self, p):
         return arbre_abstrait.AppelFonction(p.IDENTIFIANT, p.exprList)
 
     @_('expr')
@@ -178,11 +187,11 @@ class FloParser(Parser):
     def instruction(self, p):
         return p[0]
 
-    @_('SI "(" expr ")" "{" listeInstructions "}"')
+    @_('SI "(" expr ")" "{" listeInstructions "}" instructionConditionnelle')
     def instructionConditionnelle(self, p):
         return arbre_abstrait.InstructionConditionnelle(p.expr, p.listeInstructions)
 
-    @_('SINON_SI "(" expr ")" "{" listeInstructions "}"')
+    @_('SINON_SI "(" expr ")" "{" listeInstructions "}" instructionConditionnelle')
     def instructionConditionnelle(self, p):
         return arbre_abstrait.SiNonSi(p.expr, p.listeInstructions)
 
@@ -193,6 +202,14 @@ class FloParser(Parser):
     @_('TANT_QUE "(" expr ")" "{" listeInstructions "}"')
     def instructionConditionnelle(self, p):
         return arbre_abstrait.TantQue(p.expr, p.listeInstructions)
+
+    @_('instruction_retourner')
+    def instruction(self, p):
+        return p[0]
+
+    @_('RETOURNER expr ";"')
+    def instruction_retourner(self, p):
+        return arbre_abstrait.InstructionRetourner(p.expr)
 
 
 if __name__ == '__main__':
