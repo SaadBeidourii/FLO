@@ -104,7 +104,7 @@ Affiche le code nasm correspondant à tout un programme
 """
 
 
-def gen_programme(programme):
+def gen_programme1(programme):
     printifm('%include\t"io.asm"')
 
     printifm('section\t.bss')
@@ -119,7 +119,7 @@ def gen_programme(programme):
 
     printifm('_start:')
 
-    gen_listeInstructions(programme.listeInstructions)
+    gen_listeInstructions1(programme.listeInstructions)
 
     nasm_instruction("mov", "eax", "1", "", "1 est le code de SYS_EXIT")
 
@@ -133,9 +133,9 @@ Affiche le code nasm correspondant à une suite d'instructions
 """
 
 
-def gen_listeInstructions(listeInstructions):
+def gen_listeInstructions1(listeInstructions):
     for instruction in reversed(listeInstructions.instructions):
-        gen_instruction(instruction)
+        gen_instruction1(instruction)
 
 
 """
@@ -145,10 +145,10 @@ Affiche le code nasm correspondant à une instruction
 """
 
 
-def gen_instruction(instruction):
+def gen_instructio1(instruction):
     if type(instruction) == arbre_abstrait.Ecrire:
 
-        gen_ecrire(instruction)
+        gen_ecrire1(instruction)
 
     else:
 
@@ -164,8 +164,8 @@ Affiche le code nasm correspondant au fait d'envoyer la valeur entière d'une ex
 """
 
 
-def gen_ecrire(ecrire):
-    gen_expression(ecrire.exp)  # on calcule et empile la valeur d'expression
+def gen_ecrire1(ecrire):
+    gen_expression1(ecrire.exp)  # on calcule et empile la valeur d'expression
 
     nasm_instruction("pop", "eax", "", "", "")  # on dépile la valeur d'expression sur eax
 
@@ -179,14 +179,14 @@ Affiche le code nasm pour calculer et empiler la valeur d'une expression
 """
 
 
-def gen_expression(expression):
+def gen_expression1(expression):
     if type(expression) == arbre_abstrait.Operation:
 
         gen_operation(expression)  # on calcule et empile la valeur de l'opération
 
     elif type(expression) == arbre_abstrait.BooleenOperation:
 
-        gen_operation_booleen(expression)
+        gen_operation_booleen1(expression)
 
     elif type(expression) == arbre_abstrait.Entier:
 
@@ -232,12 +232,12 @@ Affiche le code nasm pour calculer l'opération et la mettre en haut de la pile
 """
 
 
-def gen_operation_booleen(operation):
+def gen_operation_booleen1(operation):
     op = operation.op
 
-    type_exp1 = gen_expression(operation.operande_gauche)
+    type_exp1 = gen_expression1(operation.operande_gauche)
 
-    type_exp2 = gen_expression(operation.operande_droit)
+    type_exp2 = gen_expression1(operation.operande_droit)
 
     if type_exp1 != "booleen" or type_exp2 != "booleen":
         print("Erreur de type : Les opérateurs logiques doivent être appliqués à des booléens.")
@@ -271,10 +271,10 @@ def gen_operation_booleen(operation):
     return "booleen"
 
 
-def gen_comparison(operation):
-    gen_expression(operation.exp1)
+def gen_comparison1(operation):
+    gen_expression1(operation.exp1)
 
-    gen_expression(operation.exp2)
+    gen_expression1(operation.exp2)
 
     nasm_instruction("pop", "ebx", "", "", "Dépiler la deuxième opérande dans ebx")
 
@@ -311,9 +311,9 @@ def gen_comparison(operation):
 def gen_operation(operation):
     op = operation.op
 
-    gen_expression(operation.exp1)
+    gen_expression1(operation.exp1)
 
-    gen_expression(operation.exp2)
+    gen_expression1(operation.exp2)
 
     nasm_instruction("pop", "ebx", "", "", "dépile la seconde operande dans ebx")
 
@@ -368,7 +368,7 @@ if __name__ == "__main__":
 
             arbre = parser.parse(lexer.tokenize(data))
 
-            gen_programme(arbre)
+            gen_programme1(arbre)
 
         except EOFError:
 

@@ -52,8 +52,8 @@ Rule 48    instruction_retourner -> RETOURNER expr ;
 
 Unused terminals:
 
-    VRAI
     FAUX
+    VRAI
 
 Terminals, with rules where they appear:
 
