@@ -1,4 +1,7 @@
 import sys
+from copy import deepcopy
+
+from cffi.ffiplatform import flatten
 
 from analyse_lexicale import FloLexer
 
@@ -104,25 +107,50 @@ Affiche le code nasm correspondant à tout un programme
 """
 
 
+def is_nested(variable_defs):
+    pass
+
+
 def gen_programme1(programme):
+    global is_in_function
     printifm('%include\t"io.asm"')
-
     printifm('section\t.bss')
-
     printifm('sinput:	resb	255	;reserve a 255 byte space in memory for the users input string')
-
     printifm('v$a:	resd	1')
-
     printifm('section\t.text')
-
     printifm('global _start')
+    nasm_comment("===== Generating function declarations =====")
+    programme_copy = deepcopy(programme)
+    for instruction in programme_copy.liste_instructions.instructions:
+        if type(instruction) == arbre_abstrait.FunctionDeclaration:
+            gen_def_fonction(instruction)
+    nasm_comment("===== End of function declarations =====")
 
-    printifm('_start:')
+    nasm_comment("===== Generating main function =====")
+    printifm('main:')
 
-    gen_listeInstructions1(programme.listeInstructions)
+    nasm_instruction("push", "ebp", "", "", "")
+    nasm_instruction("mov", "ebp", "esp", "", "")
+    # allocating space for local variables
+    variable_defs = programme_copy.liste_instructions.get_variable_definitions()
+    # flatten the list of lists of variable definitions
+    while is_nested(variable_defs):
+        variable_defs = flatten(variable_defs)
 
+    space_for_local_variables = len(variable_defs) * 4
+    nasm_instruction("sub", "esp", str(space_for_local_variables), "", "")
+    for i in range(len(variable_defs)):
+        variable_defs[i].offset = f"-{(i + 1) * 4}"
+
+    global is_in_function
+    gen_listeInstructions1(programme_copy.liste_instructions)
+    nasm_instruction("leave", "", "", "", "")
+    nasm_instruction("ret", "", "", "", "")
+    nasm_comment("===== End of main function =====")
+    printifm("_start:")
+    nasm_instruction("call", "main", "", "", "")
     nasm_instruction("mov", "eax", "1", "", "1 est le code de SYS_EXIT")
-
+    nasm_instruction("mov", "ebx", "0", comment="0 est le code de retour correct ici")
     nasm_instruction("int", "0x80", "", "", "exit")
 
 
@@ -135,7 +163,7 @@ Affiche le code nasm correspondant à une suite d'instructions
 
 def gen_listeInstructions1(listeInstructions):
     for instruction in reversed(listeInstructions.instructions):
-        gen_instruction1(instruction)
+        gen_listeInstructions1(instruction)
 
 
 """
@@ -217,6 +245,16 @@ def gen_expression1(expression):
             nasm_instruction("push", "0", "", "", "Empile la valeur booléenne False 0")
 
         return "booleen"
+    elif type(expression) == arbre_abstrait.Sinon:
+        gen_condition(expression)
+    elif type(expression) == arbre_abstrait.InstructionConditionnelle:
+        gen_condition(expression)
+    elif type(expression) == arbre_abstrait.SiNonSi:
+        gen_condition(expression)
+    elif type(expression) == arbre_abstrait.TantQue:
+        gen_while(expression)
+    elif type(expression) == arbre_abstrait.InstructionRetourner:
+        gen_return_statement(expression)
 
     else:
 
@@ -244,7 +282,7 @@ def gen_operation_booleen1(operation):
 
         exit(0)
 
-    if op == "ou":
+    if op == arbre_abstrait.OperationEnum.OR:
 
         nasm_instruction("pop", "ebx", "", "", "Dépile la seconde opérande dans ebx")
 
@@ -252,7 +290,7 @@ def gen_operation_booleen1(operation):
 
         nasm_instruction("or", "eax", "ebx", "", "Opération logique OR (bitwise) entre eax et ebx")
 
-    elif op == "et":
+    elif op == arbre_abstrait.OperationEnum.AND:
 
         nasm_instruction("pop", "ebx", "", "", "Dépile la seconde opérande dans ebx")
 
@@ -260,7 +298,7 @@ def gen_operation_booleen1(operation):
 
         nasm_instruction("and", "eax", "ebx", "", "Opération logique AND (bitwise) entre eax et ebx")
 
-    elif op == "!":
+    elif op == arbre_abstrait.OperationEnum.NOT:
 
         nasm_instruction("pop", "eax", "", "", "Dépile l'opérande dans eax")
 
@@ -326,17 +364,95 @@ def gen_operation(operation):
                          "effectue l'opération eax" + op + "ebx et met le résultat dans eax")
 
     if op == '*':
-
         nasm_instruction(code[op], "ebx", "", "", "effectue l'opération eax" + op + "ebx et met le résultat dans eax")
 
-
     if op == '/':
-
         nasm_instruction("xor", "edx", "edx", "", "initialise edx à 0")
 
         nasm_instruction("idiv", "ebx", "", "", "effectue la division edx:eax / ebx")
 
     nasm_instruction("push", "eax", "", "", "empile le résultat")
+
+
+def gen_condition(condition: arbre_abstrait.Sinon or arbre_abstrait.InstructionConditionnelle):
+    nasm_comment(f"===== Generating condition =====")
+    label_else = nasm_nouvelle_etiquette()
+    label_fin = nasm_nouvelle_etiquette()
+    gen_expression1(condition.expr)
+    nasm_instruction("pop", "eax", "", "", "")
+    nasm_instruction("cmp", "eax", "0", "", "")
+    nasm_instruction("je", label_else, "", "", "")
+    gen_listeInstructions1(condition.scope1)
+    nasm_instruction("jmp", label_fin, "", "", "")
+    printift(label_else + ":")
+    printift(label_fin + ":")
+    nasm_instruction("push", "eax", "", "", "")
+    nasm_comment(f"===== Finished generating condition =====")
+
+
+def gen_while(while_statement: arbre_abstrait.TantQue):
+    nasm_comment(f"===== Generating while loop =====")
+    label_debut = nasm_nouvelle_etiquette()
+    label_fin = nasm_nouvelle_etiquette()
+    printift(label_debut + ":")
+    gen_expression1(while_statement.expr)
+    nasm_instruction("pop", "eax", "", "", "")
+    nasm_instruction("cmp", "eax", "0", "", "")
+    nasm_instruction("je", label_fin, "", "", "")
+    gen_listeInstructions1(while_statement.scope)
+    nasm_instruction("jmp", label_debut, "", "", "")
+    printift(label_fin + ":")
+    nasm_instruction("push", "eax", "", "", "")
+    nasm_comment(f"===== Finished generating while loop =====")
+
+def gen_return_statement(return_statement: arbre_abstrait.InstructionRetourner):
+    nasm_comment(f"===== Generating return statement =====")
+    gen_expression1(return_statement.exp)
+    nasm_instruction("pop", "eax", "", "", comment="Pop return value from stack")
+    nasm_instruction("leave", "", "", "", comment="Clean up stack")
+    nasm_instruction("ret", "", "", "", comment="Return to caller")
+    nasm_comment(f"===== Finished generating return statement =====")
+
+def gen_def_fonction(function: arbre_abstrait.FunctionDeclaration):
+    nasm_comment(f"===== Generating function {function.name} =====")
+    printift(f"_{function.name}:")
+    nasm_comment(f"===== Initialising function {function.name} =====")
+    nasm_instruction("push", "ebp", "", "", "")
+    nasm_instruction("mov", "ebp", "esp", "", "")
+
+    nasm_comment(f"===== Storing arguments of function {function.name} =====")
+    # storing the arguments in FunctionDeclaration.args
+    for i in range(len(function.args)):
+        nasm_comment(f"===== Storing argument {function.args[i].name} =====")
+        function.args[i].offset = f"+{(len(function.args) - i - 1) * 4 + 8}"
+        nasm_comment(f"===== Stored argument {function.args[i].name} at offset {function.args[i].offset} =====")
+    nasm_comment(f"===== Allocating local variables of function {function.name} =====")
+    # allocating space for local variables
+    variable_defs = function.scope.get_variable_definitions()
+
+
+    nasm_comment(f"===== Found {len(variable_defs)} local variables in function {function.name} =====")
+
+    space_for_local_variables = len(variable_defs) * 4
+    nasm_instruction("sub", "esp", str(space_for_local_variables), "",
+                     f"Substracting space for local variables from esp ({space_for_local_variables})")
+    for i in range(len(variable_defs)):
+        nasm_comment(f"===== Storing local variable {variable_defs[i].name} =====")
+        variable_defs[i].offset = f"-{(i + 1) * 4}"
+        nasm_comment(f"===== Stored local variable {variable_defs[i].name} at offset {variable_defs[i].offset} =====")
+
+    global is_in_function
+    is_in_function = True
+    nasm_comment(f"===== Generating instructions of function {function.name} =====")
+    gen_listeInstructions1(function.scope)
+    nasm_comment(f"===== Finished generating instructions of function {function.name} =====")
+    nasm_comment(f"===== Cleaning up function {function.name} =====")
+    nasm_instruction("leave", "", "", "", comment="Clean up stack")
+    nasm_instruction("ret", "", "", "", comment="Return to caller")
+    nasm_comment(f"===== Finished cleaning up function {function.name} =====")
+    nasm_comment(f"===== Finished generating function {function.name} =====")
+    is_in_function = False
+
 
 
 if __name__ == "__main__":

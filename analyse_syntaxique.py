@@ -211,6 +211,34 @@ class FloParser(Parser):
     def instruction_retourner(self, p):
         return arbre_abstrait.InstructionRetourner(p.expr)
 
+    @_('"{" new_scope listeInstructions "}"')
+    def scope(self, p):
+        instructions = p.listeInstructions
+        arbre_abstrait.pop_scope()
+        return instructions
+
+    @_('')
+    def new_scope(self, p):
+        arbre_abstrait.create_scope()
+        return
+
+    @_('TYPE IDENTIFIANT new_scope "(" parameter_list ")"')
+    def function_declaration(self, p):
+        func = arbre_abstrait.FunctionDeclaration(p.TYPE, p.IDENTIFIANT, p.parameter_list)
+        return func
+
+    @_('TYPE IDENTIFIANT new_scope "(" ")"')
+    def function_declaration(self, p):
+        func = arbre_abstrait.FunctionDeclaration(p.TYPE, p.IDENTIFIANT, arbre_abstrait.ParameterList())
+        return func
+
+    @_('function_declaration "{" listeInstructions "}"')
+    def function_definition(self, p):
+        func = p.function_declaration
+        func.set_scope(p.listeInstructions)
+        arbre_abstrait.pop_scope()
+        return func
+
 
 if __name__ == '__main__':
     lexer = FloLexer()

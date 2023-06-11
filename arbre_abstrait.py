@@ -1,6 +1,9 @@
 """
 Affiche une chaine de caractère avec une certaine identation
 """
+from enum import Enum
+from inspect import stack
+from typing import TYPE_CHECKING
 
 
 def afficher(s, indent=0):
@@ -29,7 +32,6 @@ class Operation:
             self.exp1.afficher(indent + 1)
         self.exp2.afficher(indent + 1)
         afficher('</operation "' + self.op + '">', indent)
-
 
 
 class ListeInstructions:
@@ -146,6 +148,35 @@ class Declaration:
         afficher("</declaration>", indent)
 
 
+class FunctionDeclaration:
+    def __init__(self, type, name, args, skip=False):
+        self.scope = ListeInstructions()
+        self.type = type
+        self.name = name
+        self.args = args
+        if not skip:
+            stack[0]['functions'][self.name] = self
+
+    def set_scope(self, scope):
+        self.scope = scope
+        if TYPE_CHECKING:
+            for instruction in self.scope.instructions:
+                if isinstance(instruction, InstructionRetourner):
+                    if instruction.type != self.type:
+                        raise Exception(f"Type mismatch: {instruction.type} and {self.type}")
+
+    def afficher(self, indent=0):
+        afficher("<functionDefinition>", indent)
+        afficher(f"<Type>{self.type}</Type>", indent + 1)
+        afficher(f"<Name>{self.name}</Name>", indent + 1)
+        self.args.afficher(indent + 1)
+        self.scope.afficher(indent + 1)
+        afficher("</functionDefinition>", indent)
+
+    def __str__(self):
+        return f"FunctionDeclaration({self.type}, {self.name}, {self.args})"
+
+
 class Affectation:
     def __init__(self, variable, expression):
         self.variable = variable
@@ -246,3 +277,20 @@ class AppelFonctionIgnore:
 
     def afficher(self, indent=0):
         self.facteur.afficher(indent)
+
+
+class OperationEnum(Enum):
+    EQUALITY = "=="
+    INEQUALITY = "!="
+    GREATER_THAN = ">"
+    LESS_THAN = "<"
+    GREATER_THAN_OR_EQUAL = ">="
+    LESS_THAN_OR_EQUAL = "<="
+    AND = "et"
+    OR = "ou"
+    PLUS = "+"
+    MINUS = "-"
+    MULTIPLY = "*"
+    DIVIDE = "/"
+    MODULO = "%"
+    NOT = "non"
