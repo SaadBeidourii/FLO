@@ -1,3 +1,1 @@
-ecrire(non Vrai);
-ecrire( Vrai et Vrai);
-ecrire( Vrai ou Faux );
+ecrire( ! Vrai);

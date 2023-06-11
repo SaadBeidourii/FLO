@@ -119,8 +119,8 @@ class FloParser(Parser):
         return arbre_abstrait.Booleen(p.BOOLEEN)
 
     @_('NON booleen')
-    def boolean(self, p):
-        return arbre_abstrait.Operation('NON', p[1])
+    def booleen(self, p):
+        return arbre_abstrait.Operation('NON', None,p.booleen)
 
     @_('booleen ET booleen')
     def booleen(self, p):

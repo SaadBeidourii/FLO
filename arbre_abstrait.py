@@ -25,9 +25,11 @@ class Operation:
 
     def afficher(self, indent=0):
         afficher('<operation "' + self.op + '">', indent)
-        self.exp1.afficher(indent + 1)
+        if self.exp1 is not None:
+            self.exp1.afficher(indent + 1)
         self.exp2.afficher(indent + 1)
         afficher('</operation "' + self.op + '">', indent)
+
 
 
 class ListeInstructions:

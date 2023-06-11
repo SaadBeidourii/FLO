@@ -4,7 +4,7 @@ from sly import Lexer
 
 class FloLexer(Lexer):
     # Noms des lexèmes (sauf les litéraux). En majuscule. Ordre non important
-    tokens = {IDENTIFIANT, TYPE, ENTIER, ECRIRE, INFERIEUR_OU_EGAL, LIRE, SI, SINON,SINON_SI, TANT_QUE,
+    tokens = {IDENTIFIANT, TYPE, ENTIER, ECRIRE, INFERIEUR_OU_EGAL, LIRE, SI, SINON, SINON_SI, TANT_QUE,
               RETOURNER, EGAL, SUPERIEUR_OU_EGAL, BOOLEEN, NON_EGAL, ET, OU, NON, FAUX, VRAI, RETOURNER, INFERIEUR,
               SUPERIEUR}
 
@@ -32,7 +32,6 @@ class FloLexer(Lexer):
     IDENTIFIANT['Faux'] = BOOLEEN
     IDENTIFIANT['et'] = ET
     IDENTIFIANT['ou'] = OU
-    IDENTIFIANT['non']= NON
 
     NON = r'!'
     EGAL = r'=='
@@ -40,20 +39,16 @@ class FloLexer(Lexer):
     SUPERIEUR_OU_EGAL = r'>='
     INFERIEUR = r'<'
     SUPERIEUR = r'>'
-    NON_EGAL = r'!='
 
     # cas spéciaux:
     IDENTIFIANT['ecrire'] = ECRIRE
     IDENTIFIANT['booleen'] = TYPE
     IDENTIFIANT['entier'] = TYPE
 
-
-
     # Syntaxe des commentaires à ignorer
     ignore_comment = r'\#.*'
 
-
-        # Permet de conserver les numéros de ligne. Utile pour les messages d'erreurs
+    # Permet de conserver les numéros de ligne. Utile pour les messages d'erreurs
 
     @_(r'\n+')
     def ignore_newline(self, t):
