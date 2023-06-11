@@ -130,8 +130,10 @@ class BooleenOperation:
         afficher("<booleenOperation>", indent)
         afficher(self.operateur, indent + 1)
         self.operande_gauche.afficher(indent + 1)
-        self.operande_droit.afficher(indent + 1)
+        if self.operande_droit is not None:
+            self.operande_droit.afficher(indent + 1)
         afficher("</booleenOperation>", indent)
+
 
 
 class Declaration:
