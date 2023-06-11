@@ -30,6 +30,17 @@ class Operation:
         self.exp2.afficher(indent + 1)
         afficher("</operation>", indent)
 
+class OperationNonBooleen:
+    def __init__(self, operateur, exp1):
+        self.operateur = operateur
+        self.exp1 = exp1
+
+    def afficher(self, indent=0):
+        afficher("<Non Booleen>", indent)
+        afficher(self.operateur, indent + 1)
+        self.exp1.afficher(indent + 1)
+        afficher("</Non Booleen>", indent)
+
 
 class ListeInstructions:
     def __init__(self):

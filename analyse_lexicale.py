@@ -32,6 +32,7 @@ class FloLexer(Lexer):
     IDENTIFIANT['Faux'] = BOOLEEN
     IDENTIFIANT['et'] = ET
     IDENTIFIANT['ou'] = OU
+    IDENTIFIANT['non']= NON
 
     NON = r'!'
     EGAL = r'=='
