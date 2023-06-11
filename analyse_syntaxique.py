@@ -120,15 +120,15 @@ class FloParser(Parser):
 
     @_('NON booleen')
     def booleen(self, p):
-        return arbre_abstrait.Operation('NON', None,p.booleen)
+        return arbre_abstrait.BooleenOperation('NON', None, p.booleen)
 
     @_('booleen ET booleen')
     def booleen(self, p):
-        return arbre_abstrait.Operation('ET', p[0], p[2])
+        return arbre_abstrait.BooleenOperation('ET', p[0], p[2])
 
     @_('booleen OU booleen')
     def booleen(self, p):
-        return arbre_abstrait.Operation('OU', p[0], p[2])
+        return arbre_abstrait.BooleenOperation('OU', p[0], p[2])
 
     # En supposant que vous avez également des opérations de comparaison
     @_('facteur EGAL facteur')
