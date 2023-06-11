@@ -82,7 +82,7 @@ class FloParser(Parser):
         return arbre_abstrait.Variable(p.IDENTIFIANT)
 
     @_('LIRE "(" ")"')
-    def facteur(self):
+    def facteur(self,p):
         return arbre_abstrait.Lire()
 
     # Règles pour les appels de fonction

@@ -24,6 +24,7 @@ tantque (Vrai) {
     retourner mok ;
 }
 
-ecrire(test(arg1,arg2));
+ecrire(1+lire());
 
 entier res = somme(1,2);
+
