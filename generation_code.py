@@ -278,7 +278,7 @@ def gen_operation_boolean(operation):
         nasm_instruction("pop", "ebx", "", "", "Dépile la seconde opérande dans ebx")
         nasm_instruction("pop", "eax", "", "", "Dépile la première opérande dans eax")
         nasm_instruction("and", "eax", "ebx", "", "Opération logique AND (bitwise) entre eax et ebx")
-    elif op == "Non":
+    elif op == "non":
         nasm_instruction("pop", "eax", "", "", "Dépile l'opérande dans eax")
         nasm_instruction("xor", "eax", "1", "", "Opération logique XOR (bitwise) avec 1 pour la négation")
     nasm_instruction("push", "eax", "", "", "Empile le résultat")

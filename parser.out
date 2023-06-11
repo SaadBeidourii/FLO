@@ -38,8 +38,8 @@ Rule 34    booleen -> facteur NON_EGAL facteur
 Rule 35    booleen -> facteur EGAL facteur
 Rule 36    booleen -> booleen OU booleen
 Rule 37    booleen -> booleen ET booleen
-Rule 38    booleen -> NON booleen
-Rule 39    booleen -> BOOLEEN
+Rule 38    booleen -> BOOLEEN
+Rule 39    boolean -> NON booleen
 Rule 40    type -> TYPE
 Rule 41    variable -> IDENTIFIANT
 Rule 42    declaration -> type IDENTIFIANT ;
@@ -67,7 +67,7 @@ Terminals, with rules where they appear:
 /                    : 18
 ;                    : 8 9 11 42 43 48
 =                    : 8 43
-BOOLEEN              : 39
+BOOLEEN              : 38
 ECRIRE               : 11
 EGAL                 : 35
 ENTIER               : 15
@@ -77,7 +77,7 @@ IDENTIFIANT          : 8 14 26 27 41 42 43
 INFERIEUR            : 31
 INFERIEUR_OU_EGAL    : 33
 LIRE                 : 13
-NON                  : 38
+NON                  : 39
 NON_EGAL             : 34
 OU                   : 36
 RETOURNER            : 48
@@ -96,7 +96,8 @@ error                :
 Nonterminals, with rules where they appear:
 
 appelFonction        : 9 12
-booleen              : 21 36 36 37 37 38
+boolean              : 
+booleen              : 21 36 36 37 37 39
 declaration          : 7
 declarationAffectation : 6
 ecrire               : 10
@@ -319,8 +320,7 @@ state 11
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -333,54 +333,53 @@ state 11
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
     expr                           shift and go to state 23
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
 state 12
 
     (44) instructionConditionnelle -> TANT_QUE . ( expr ) { listeInstructions }
-    (               shift and go to state 35
+    (               shift and go to state 34
 
 
 state 13
 
     (45) instructionConditionnelle -> SINON . { listeInstructions }
-    {               shift and go to state 36
+    {               shift and go to state 35
 
 
 state 14
 
     (46) instructionConditionnelle -> SINON_SI . ( expr ) { listeInstructions } instructionConditionnelle
-    (               shift and go to state 37
+    (               shift and go to state 36
 
 
 state 15
 
     (47) instructionConditionnelle -> SI . ( expr ) { listeInstructions } instructionConditionnelle
-    (               shift and go to state 38
+    (               shift and go to state 37
 
 
 state 16
 
     (43) declarationAffectation -> type . IDENTIFIANT = expr ;
     (42) declaration -> type . IDENTIFIANT ;
-    IDENTIFIANT     shift and go to state 39
+    IDENTIFIANT     shift and go to state 38
 
 
 state 17
 
     (11) ecrire -> ECRIRE . ( expr ) ;
-    (               shift and go to state 40
+    (               shift and go to state 39
 
 
 state 18
@@ -412,8 +411,7 @@ state 20
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -426,18 +424,17 @@ state 20
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 41
+    expr                           shift and go to state 40
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
 state 21
 
@@ -458,8 +455,7 @@ state 21
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -471,21 +467,20 @@ state 21
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    )               shift and go to state 43
+    )               shift and go to state 42
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    exprList                       shift and go to state 42
-    expr                           shift and go to state 44
+    exprList                       shift and go to state 41
+    expr                           shift and go to state 43
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
 state 22
 
@@ -507,9 +502,9 @@ state 23
     (48) instruction_retourner -> RETOURNER expr . ;
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    ;               shift and go to state 45
-    -               shift and go to state 46
-    +               shift and go to state 47
+    ;               shift and go to state 44
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
 state 24
@@ -522,8 +517,8 @@ state 24
     +               reduce using rule 21 (expr -> booleen .)
     ,               reduce using rule 21 (expr -> booleen .)
     )               reduce using rule 21 (expr -> booleen .)
-    OU              shift and go to state 48
-    ET              shift and go to state 49
+    OU              shift and go to state 47
+    ET              shift and go to state 48
 
 
 state 25
@@ -536,13 +531,13 @@ state 25
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 50
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 49
+    appelFonction                  shift and go to state 29
 
 state 26
 
@@ -553,12 +548,12 @@ state 26
     (34) booleen -> facteur . NON_EGAL facteur
     (35) booleen -> facteur . EGAL facteur
     (20) produit -> facteur .
-    SUPERIEUR       shift and go to state 51
-    INFERIEUR       shift and go to state 52
-    SUPERIEUR_OU_EGAL shift and go to state 53
-    INFERIEUR_OU_EGAL shift and go to state 54
-    NON_EGAL        shift and go to state 55
-    EGAL            shift and go to state 56
+    SUPERIEUR       shift and go to state 50
+    INFERIEUR       shift and go to state 51
+    SUPERIEUR_OU_EGAL shift and go to state 52
+    INFERIEUR_OU_EGAL shift and go to state 53
+    NON_EGAL        shift and go to state 54
+    EGAL            shift and go to state 55
     %               reduce using rule 20 (produit -> facteur .)
     /               reduce using rule 20 (produit -> facteur .)
     *               reduce using rule 20 (produit -> facteur .)
@@ -580,55 +575,24 @@ state 27
     +               reduce using rule 25 (expr -> produit .)
     ,               reduce using rule 25 (expr -> produit .)
     )               reduce using rule 25 (expr -> produit .)
-    %               shift and go to state 57
-    /               shift and go to state 58
-    *               shift and go to state 59
+    %               shift and go to state 56
+    /               shift and go to state 57
+    *               shift and go to state 58
 
 
 state 28
 
-    (38) booleen -> NON . booleen
-    (30) booleen -> . facteur SUPERIEUR facteur
-    (31) booleen -> . facteur INFERIEUR facteur
-    (32) booleen -> . facteur SUPERIEUR_OU_EGAL facteur
-    (33) booleen -> . facteur INFERIEUR_OU_EGAL facteur
-    (34) booleen -> . facteur NON_EGAL facteur
-    (35) booleen -> . facteur EGAL facteur
-    (36) booleen -> . booleen OU booleen
-    (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
-    (12) facteur -> . appelFonction
-    (13) facteur -> . LIRE ( )
-    (14) facteur -> . IDENTIFIANT
-    (15) facteur -> . ENTIER
-    (16) facteur -> . ( expr )
-    (26) appelFonction -> . IDENTIFIANT ( exprList )
-    (27) appelFonction -> . IDENTIFIANT ( )
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    (38) booleen -> BOOLEEN .
+    OU              reduce using rule 38 (booleen -> BOOLEEN .)
+    ET              reduce using rule 38 (booleen -> BOOLEEN .)
+    ;               reduce using rule 38 (booleen -> BOOLEEN .)
+    -               reduce using rule 38 (booleen -> BOOLEEN .)
+    +               reduce using rule 38 (booleen -> BOOLEEN .)
+    ,               reduce using rule 38 (booleen -> BOOLEEN .)
+    )               reduce using rule 38 (booleen -> BOOLEEN .)
 
-    booleen                        shift and go to state 60
-    facteur                        shift and go to state 61
-    appelFonction                  shift and go to state 30
 
 state 29
-
-    (39) booleen -> BOOLEEN .
-    OU              reduce using rule 39 (booleen -> BOOLEEN .)
-    ET              reduce using rule 39 (booleen -> BOOLEEN .)
-    ;               reduce using rule 39 (booleen -> BOOLEEN .)
-    -               reduce using rule 39 (booleen -> BOOLEEN .)
-    +               reduce using rule 39 (booleen -> BOOLEEN .)
-    ,               reduce using rule 39 (booleen -> BOOLEEN .)
-    )               reduce using rule 39 (booleen -> BOOLEEN .)
-
-
-state 30
 
     (12) facteur -> appelFonction .
     SUPERIEUR       reduce using rule 12 (facteur -> appelFonction .)
@@ -649,13 +613,13 @@ state 30
     ET              reduce using rule 12 (facteur -> appelFonction .)
 
 
-state 31
+state 30
 
     (13) facteur -> LIRE . ( )
-    (               shift and go to state 62
+    (               shift and go to state 59
 
 
-state 32
+state 31
 
     (16) facteur -> ( . expr )
     (21) expr -> . booleen
@@ -671,8 +635,7 @@ state 32
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -685,20 +648,19 @@ state 32
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 63
+    expr                           shift and go to state 60
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
-state 33
+state 32
 
     (14) facteur -> IDENTIFIANT .
     (26) appelFonction -> IDENTIFIANT . ( exprList )
@@ -722,7 +684,7 @@ state 33
     (               shift and go to state 21
 
 
-state 34
+state 33
 
     (15) facteur -> ENTIER .
     SUPERIEUR       reduce using rule 15 (facteur -> ENTIER .)
@@ -743,7 +705,7 @@ state 34
     ET              reduce using rule 15 (facteur -> ENTIER .)
 
 
-state 35
+state 34
 
     (44) instructionConditionnelle -> TANT_QUE ( . expr ) { listeInstructions }
     (21) expr -> . booleen
@@ -759,8 +721,7 @@ state 35
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -773,20 +734,19 @@ state 35
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 64
+    expr                           shift and go to state 61
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
-state 36
+state 35
 
     (45) instructionConditionnelle -> SINON { . listeInstructions }
     (2) listeInstructions -> . instruction listeInstructions
@@ -818,7 +778,7 @@ state 36
     ECRIRE          shift and go to state 17
     TYPE            shift and go to state 18
 
-    listeInstructions              shift and go to state 65
+    listeInstructions              shift and go to state 62
     instruction                    shift and go to state 3
     instruction_retourner          shift and go to state 4
     instructionConditionnelle      shift and go to state 5
@@ -828,7 +788,7 @@ state 36
     ecrire                         shift and go to state 10
     type                           shift and go to state 16
 
-state 37
+state 36
 
     (46) instructionConditionnelle -> SINON_SI ( . expr ) { listeInstructions } instructionConditionnelle
     (21) expr -> . booleen
@@ -844,8 +804,7 @@ state 37
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -858,20 +817,19 @@ state 37
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 66
+    expr                           shift and go to state 63
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
-state 38
+state 37
 
     (47) instructionConditionnelle -> SI ( . expr ) { listeInstructions } instructionConditionnelle
     (21) expr -> . booleen
@@ -887,8 +845,7 @@ state 38
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -901,28 +858,27 @@ state 38
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 67
+    expr                           shift and go to state 64
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
-state 39
+state 38
 
     (43) declarationAffectation -> type IDENTIFIANT . = expr ;
     (42) declaration -> type IDENTIFIANT . ;
-    =               shift and go to state 68
-    ;               shift and go to state 69
+    =               shift and go to state 65
+    ;               shift and go to state 66
 
 
-state 40
+state 39
 
     (11) ecrire -> ECRIRE ( . expr ) ;
     (21) expr -> . booleen
@@ -938,8 +894,7 @@ state 40
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -952,36 +907,35 @@ state 40
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 70
+    expr                           shift and go to state 67
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
-state 41
+state 40
 
     (8) instruction -> IDENTIFIANT = expr . ;
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    ;               shift and go to state 71
-    -               shift and go to state 46
-    +               shift and go to state 47
+    ;               shift and go to state 68
+    -               shift and go to state 45
+    +               shift and go to state 46
+
+
+state 41
+
+    (26) appelFonction -> IDENTIFIANT ( exprList . )
+    )               shift and go to state 69
 
 
 state 42
-
-    (26) appelFonction -> IDENTIFIANT ( exprList . )
-    )               shift and go to state 72
-
-
-state 43
 
     (27) appelFonction -> IDENTIFIANT ( ) .
     ;               reduce using rule 27 (appelFonction -> IDENTIFIANT ( ) .)
@@ -1002,19 +956,19 @@ state 43
     ET              reduce using rule 27 (appelFonction -> IDENTIFIANT ( ) .)
 
 
-state 44
+state 43
 
     (28) exprList -> expr . , exprList
     (29) exprList -> expr .
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    ,               shift and go to state 73
+    ,               shift and go to state 70
     )               reduce using rule 29 (exprList -> expr .)
-    -               shift and go to state 46
-    +               shift and go to state 47
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
-state 45
+state 44
 
     (48) instruction_retourner -> RETOURNER expr ; .
     IDENTIFIANT     reduce using rule 48 (instruction_retourner -> RETOURNER expr ; .)
@@ -1029,7 +983,7 @@ state 45
     }               reduce using rule 48 (instruction_retourner -> RETOURNER expr ; .)
 
 
-state 46
+state 45
 
     (23) expr -> expr - . produit
     (17) produit -> . produit % facteur
@@ -1043,16 +997,16 @@ state 46
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    produit                        shift and go to state 74
-    facteur                        shift and go to state 75
-    appelFonction                  shift and go to state 30
+    produit                        shift and go to state 71
+    facteur                        shift and go to state 72
+    appelFonction                  shift and go to state 29
 
-state 47
+state 46
 
     (24) expr -> expr + . produit
     (17) produit -> . produit % facteur
@@ -1066,16 +1020,16 @@ state 47
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    produit                        shift and go to state 76
-    facteur                        shift and go to state 75
-    appelFonction                  shift and go to state 30
+    produit                        shift and go to state 73
+    facteur                        shift and go to state 72
+    appelFonction                  shift and go to state 29
 
-state 48
+state 47
 
     (36) booleen -> booleen OU . booleen
     (30) booleen -> . facteur SUPERIEUR facteur
@@ -1086,8 +1040,7 @@ state 48
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (12) facteur -> . appelFonction
     (13) facteur -> . LIRE ( )
     (14) facteur -> . IDENTIFIANT
@@ -1095,18 +1048,17 @@ state 48
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    booleen                        shift and go to state 77
-    facteur                        shift and go to state 61
-    appelFonction                  shift and go to state 30
+    booleen                        shift and go to state 74
+    facteur                        shift and go to state 75
+    appelFonction                  shift and go to state 29
 
-state 49
+state 48
 
     (37) booleen -> booleen ET . booleen
     (30) booleen -> . facteur SUPERIEUR facteur
@@ -1117,8 +1069,7 @@ state 49
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (12) facteur -> . appelFonction
     (13) facteur -> . LIRE ( )
     (14) facteur -> . IDENTIFIANT
@@ -1126,18 +1077,17 @@ state 49
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    booleen                        shift and go to state 78
-    facteur                        shift and go to state 61
-    appelFonction                  shift and go to state 30
+    booleen                        shift and go to state 76
+    facteur                        shift and go to state 75
+    appelFonction                  shift and go to state 29
 
-state 50
+state 49
 
     (22) expr -> - facteur .
     ;               reduce using rule 22 (expr -> - facteur .)
@@ -1147,7 +1097,7 @@ state 50
     )               reduce using rule 22 (expr -> - facteur .)
 
 
-state 51
+state 50
 
     (30) booleen -> facteur SUPERIEUR . facteur
     (12) facteur -> . appelFonction
@@ -1157,15 +1107,15 @@ state 51
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 79
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 77
+    appelFonction                  shift and go to state 29
 
-state 52
+state 51
 
     (31) booleen -> facteur INFERIEUR . facteur
     (12) facteur -> . appelFonction
@@ -1175,15 +1125,15 @@ state 52
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 80
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 78
+    appelFonction                  shift and go to state 29
 
-state 53
+state 52
 
     (32) booleen -> facteur SUPERIEUR_OU_EGAL . facteur
     (12) facteur -> . appelFonction
@@ -1193,15 +1143,15 @@ state 53
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 81
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 79
+    appelFonction                  shift and go to state 29
 
-state 54
+state 53
 
     (33) booleen -> facteur INFERIEUR_OU_EGAL . facteur
     (12) facteur -> . appelFonction
@@ -1211,15 +1161,15 @@ state 54
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 82
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 80
+    appelFonction                  shift and go to state 29
 
-state 55
+state 54
 
     (34) booleen -> facteur NON_EGAL . facteur
     (12) facteur -> . appelFonction
@@ -1229,15 +1179,15 @@ state 55
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 83
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 81
+    appelFonction                  shift and go to state 29
 
-state 56
+state 55
 
     (35) booleen -> facteur EGAL . facteur
     (12) facteur -> . appelFonction
@@ -1247,15 +1197,15 @@ state 56
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 84
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 82
+    appelFonction                  shift and go to state 29
 
-state 57
+state 56
 
     (17) produit -> produit % . facteur
     (12) facteur -> . appelFonction
@@ -1265,15 +1215,15 @@ state 57
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 85
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 83
+    appelFonction                  shift and go to state 29
 
-state 58
+state 57
 
     (18) produit -> produit / . facteur
     (12) facteur -> . appelFonction
@@ -1283,15 +1233,15 @@ state 58
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 86
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 84
+    appelFonction                  shift and go to state 29
 
-state 59
+state 58
 
     (19) produit -> produit * . facteur
     (12) facteur -> . appelFonction
@@ -1301,99 +1251,67 @@ state 59
     (16) facteur -> . ( expr )
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    facteur                        shift and go to state 87
-    appelFonction                  shift and go to state 30
+    facteur                        shift and go to state 85
+    appelFonction                  shift and go to state 29
 
-state 60
-
-    (38) booleen -> NON booleen .
-    (36) booleen -> booleen . OU booleen
-    (37) booleen -> booleen . ET booleen
-  ! shift/reduce conflict for OU resolved as shift
-  ! shift/reduce conflict for ET resolved as shift
-    ;               reduce using rule 38 (booleen -> NON booleen .)
-    -               reduce using rule 38 (booleen -> NON booleen .)
-    +               reduce using rule 38 (booleen -> NON booleen .)
-    ,               reduce using rule 38 (booleen -> NON booleen .)
-    )               reduce using rule 38 (booleen -> NON booleen .)
-    OU              shift and go to state 48
-    ET              shift and go to state 49
-
-
-state 61
-
-    (30) booleen -> facteur . SUPERIEUR facteur
-    (31) booleen -> facteur . INFERIEUR facteur
-    (32) booleen -> facteur . SUPERIEUR_OU_EGAL facteur
-    (33) booleen -> facteur . INFERIEUR_OU_EGAL facteur
-    (34) booleen -> facteur . NON_EGAL facteur
-    (35) booleen -> facteur . EGAL facteur
-    SUPERIEUR       shift and go to state 51
-    INFERIEUR       shift and go to state 52
-    SUPERIEUR_OU_EGAL shift and go to state 53
-    INFERIEUR_OU_EGAL shift and go to state 54
-    NON_EGAL        shift and go to state 55
-    EGAL            shift and go to state 56
-
-
-state 62
+state 59
 
     (13) facteur -> LIRE ( . )
-    )               shift and go to state 88
+    )               shift and go to state 86
 
 
-state 63
+state 60
 
     (16) facteur -> ( expr . )
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    )               shift and go to state 89
-    -               shift and go to state 46
-    +               shift and go to state 47
+    )               shift and go to state 87
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
-state 64
+state 61
 
     (44) instructionConditionnelle -> TANT_QUE ( expr . ) { listeInstructions }
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    )               shift and go to state 90
-    -               shift and go to state 46
-    +               shift and go to state 47
+    )               shift and go to state 88
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
-state 65
+state 62
 
     (45) instructionConditionnelle -> SINON { listeInstructions . }
-    }               shift and go to state 91
+    }               shift and go to state 89
 
 
-state 66
+state 63
 
     (46) instructionConditionnelle -> SINON_SI ( expr . ) { listeInstructions } instructionConditionnelle
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    )               shift and go to state 92
-    -               shift and go to state 46
-    +               shift and go to state 47
+    )               shift and go to state 90
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
-state 67
+state 64
 
     (47) instructionConditionnelle -> SI ( expr . ) { listeInstructions } instructionConditionnelle
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    )               shift and go to state 93
-    -               shift and go to state 46
-    +               shift and go to state 47
+    )               shift and go to state 91
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
-state 68
+state 65
 
     (43) declarationAffectation -> type IDENTIFIANT = . expr ;
     (21) expr -> . booleen
@@ -1409,8 +1327,7 @@ state 68
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -1423,20 +1340,19 @@ state 68
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 94
+    expr                           shift and go to state 92
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
-state 69
+state 66
 
     (42) declaration -> type IDENTIFIANT ; .
     IDENTIFIANT     reduce using rule 42 (declaration -> type IDENTIFIANT ; .)
@@ -1451,17 +1367,17 @@ state 69
     }               reduce using rule 42 (declaration -> type IDENTIFIANT ; .)
 
 
-state 70
+state 67
 
     (11) ecrire -> ECRIRE ( expr . ) ;
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    )               shift and go to state 95
-    -               shift and go to state 46
-    +               shift and go to state 47
+    )               shift and go to state 93
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
-state 71
+state 68
 
     (8) instruction -> IDENTIFIANT = expr ; .
     IDENTIFIANT     reduce using rule 8 (instruction -> IDENTIFIANT = expr ; .)
@@ -1476,7 +1392,7 @@ state 71
     }               reduce using rule 8 (instruction -> IDENTIFIANT = expr ; .)
 
 
-state 72
+state 69
 
     (26) appelFonction -> IDENTIFIANT ( exprList ) .
     ;               reduce using rule 26 (appelFonction -> IDENTIFIANT ( exprList ) .)
@@ -1497,7 +1413,7 @@ state 72
     ET              reduce using rule 26 (appelFonction -> IDENTIFIANT ( exprList ) .)
 
 
-state 73
+state 70
 
     (28) exprList -> expr , . exprList
     (28) exprList -> . expr , exprList
@@ -1515,8 +1431,7 @@ state 73
     (35) booleen -> . facteur EGAL facteur
     (36) booleen -> . booleen OU booleen
     (37) booleen -> . booleen ET booleen
-    (38) booleen -> . NON booleen
-    (39) booleen -> . BOOLEEN
+    (38) booleen -> . BOOLEEN
     (17) produit -> . produit % facteur
     (18) produit -> . produit / facteur
     (19) produit -> . produit * facteur
@@ -1529,21 +1444,20 @@ state 73
     (26) appelFonction -> . IDENTIFIANT ( exprList )
     (27) appelFonction -> . IDENTIFIANT ( )
     -               shift and go to state 25
-    NON             shift and go to state 28
-    BOOLEEN         shift and go to state 29
-    LIRE            shift and go to state 31
-    IDENTIFIANT     shift and go to state 33
-    ENTIER          shift and go to state 34
-    (               shift and go to state 32
+    BOOLEEN         shift and go to state 28
+    LIRE            shift and go to state 30
+    IDENTIFIANT     shift and go to state 32
+    ENTIER          shift and go to state 33
+    (               shift and go to state 31
 
-    expr                           shift and go to state 44
-    exprList                       shift and go to state 96
+    expr                           shift and go to state 43
+    exprList                       shift and go to state 94
     booleen                        shift and go to state 24
     facteur                        shift and go to state 26
     produit                        shift and go to state 27
-    appelFonction                  shift and go to state 30
+    appelFonction                  shift and go to state 29
 
-state 74
+state 71
 
     (23) expr -> expr - produit .
     (17) produit -> produit . % facteur
@@ -1554,12 +1468,12 @@ state 74
     +               reduce using rule 23 (expr -> expr - produit .)
     ,               reduce using rule 23 (expr -> expr - produit .)
     )               reduce using rule 23 (expr -> expr - produit .)
-    %               shift and go to state 57
-    /               shift and go to state 58
-    *               shift and go to state 59
+    %               shift and go to state 56
+    /               shift and go to state 57
+    *               shift and go to state 58
 
 
-state 75
+state 72
 
     (20) produit -> facteur .
     %               reduce using rule 20 (produit -> facteur .)
@@ -1572,7 +1486,7 @@ state 75
     )               reduce using rule 20 (produit -> facteur .)
 
 
-state 76
+state 73
 
     (24) expr -> expr + produit .
     (17) produit -> produit . % facteur
@@ -1583,12 +1497,12 @@ state 76
     +               reduce using rule 24 (expr -> expr + produit .)
     ,               reduce using rule 24 (expr -> expr + produit .)
     )               reduce using rule 24 (expr -> expr + produit .)
-    %               shift and go to state 57
-    /               shift and go to state 58
-    *               shift and go to state 59
+    %               shift and go to state 56
+    /               shift and go to state 57
+    *               shift and go to state 58
 
 
-state 77
+state 74
 
     (36) booleen -> booleen OU booleen .
     (36) booleen -> booleen . OU booleen
@@ -1600,11 +1514,27 @@ state 77
     +               reduce using rule 36 (booleen -> booleen OU booleen .)
     ,               reduce using rule 36 (booleen -> booleen OU booleen .)
     )               reduce using rule 36 (booleen -> booleen OU booleen .)
-    OU              shift and go to state 48
-    ET              shift and go to state 49
+    OU              shift and go to state 47
+    ET              shift and go to state 48
 
 
-state 78
+state 75
+
+    (30) booleen -> facteur . SUPERIEUR facteur
+    (31) booleen -> facteur . INFERIEUR facteur
+    (32) booleen -> facteur . SUPERIEUR_OU_EGAL facteur
+    (33) booleen -> facteur . INFERIEUR_OU_EGAL facteur
+    (34) booleen -> facteur . NON_EGAL facteur
+    (35) booleen -> facteur . EGAL facteur
+    SUPERIEUR       shift and go to state 50
+    INFERIEUR       shift and go to state 51
+    SUPERIEUR_OU_EGAL shift and go to state 52
+    INFERIEUR_OU_EGAL shift and go to state 53
+    NON_EGAL        shift and go to state 54
+    EGAL            shift and go to state 55
+
+
+state 76
 
     (37) booleen -> booleen ET booleen .
     (36) booleen -> booleen . OU booleen
@@ -1616,11 +1546,11 @@ state 78
     +               reduce using rule 37 (booleen -> booleen ET booleen .)
     ,               reduce using rule 37 (booleen -> booleen ET booleen .)
     )               reduce using rule 37 (booleen -> booleen ET booleen .)
-    OU              shift and go to state 48
-    ET              shift and go to state 49
+    OU              shift and go to state 47
+    ET              shift and go to state 48
 
 
-state 79
+state 77
 
     (30) booleen -> facteur SUPERIEUR facteur .
     OU              reduce using rule 30 (booleen -> facteur SUPERIEUR facteur .)
@@ -1632,7 +1562,7 @@ state 79
     )               reduce using rule 30 (booleen -> facteur SUPERIEUR facteur .)
 
 
-state 80
+state 78
 
     (31) booleen -> facteur INFERIEUR facteur .
     OU              reduce using rule 31 (booleen -> facteur INFERIEUR facteur .)
@@ -1644,7 +1574,7 @@ state 80
     )               reduce using rule 31 (booleen -> facteur INFERIEUR facteur .)
 
 
-state 81
+state 79
 
     (32) booleen -> facteur SUPERIEUR_OU_EGAL facteur .
     OU              reduce using rule 32 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
@@ -1656,7 +1586,7 @@ state 81
     )               reduce using rule 32 (booleen -> facteur SUPERIEUR_OU_EGAL facteur .)
 
 
-state 82
+state 80
 
     (33) booleen -> facteur INFERIEUR_OU_EGAL facteur .
     OU              reduce using rule 33 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
@@ -1668,7 +1598,7 @@ state 82
     )               reduce using rule 33 (booleen -> facteur INFERIEUR_OU_EGAL facteur .)
 
 
-state 83
+state 81
 
     (34) booleen -> facteur NON_EGAL facteur .
     OU              reduce using rule 34 (booleen -> facteur NON_EGAL facteur .)
@@ -1680,7 +1610,7 @@ state 83
     )               reduce using rule 34 (booleen -> facteur NON_EGAL facteur .)
 
 
-state 84
+state 82
 
     (35) booleen -> facteur EGAL facteur .
     OU              reduce using rule 35 (booleen -> facteur EGAL facteur .)
@@ -1692,7 +1622,7 @@ state 84
     )               reduce using rule 35 (booleen -> facteur EGAL facteur .)
 
 
-state 85
+state 83
 
     (17) produit -> produit % facteur .
     %               reduce using rule 17 (produit -> produit % facteur .)
@@ -1705,7 +1635,7 @@ state 85
     )               reduce using rule 17 (produit -> produit % facteur .)
 
 
-state 86
+state 84
 
     (18) produit -> produit / facteur .
     %               reduce using rule 18 (produit -> produit / facteur .)
@@ -1718,7 +1648,7 @@ state 86
     )               reduce using rule 18 (produit -> produit / facteur .)
 
 
-state 87
+state 85
 
     (19) produit -> produit * facteur .
     %               reduce using rule 19 (produit -> produit * facteur .)
@@ -1731,7 +1661,7 @@ state 87
     )               reduce using rule 19 (produit -> produit * facteur .)
 
 
-state 88
+state 86
 
     (13) facteur -> LIRE ( ) .
     SUPERIEUR       reduce using rule 13 (facteur -> LIRE ( ) .)
@@ -1752,7 +1682,7 @@ state 88
     ET              reduce using rule 13 (facteur -> LIRE ( ) .)
 
 
-state 89
+state 87
 
     (16) facteur -> ( expr ) .
     SUPERIEUR       reduce using rule 16 (facteur -> ( expr ) .)
@@ -1773,13 +1703,13 @@ state 89
     ET              reduce using rule 16 (facteur -> ( expr ) .)
 
 
-state 90
+state 88
 
     (44) instructionConditionnelle -> TANT_QUE ( expr ) . { listeInstructions }
-    {               shift and go to state 97
+    {               shift and go to state 95
 
 
-state 91
+state 89
 
     (45) instructionConditionnelle -> SINON { listeInstructions } .
     IDENTIFIANT     reduce using rule 45 (instructionConditionnelle -> SINON { listeInstructions } .)
@@ -1794,41 +1724,41 @@ state 91
     }               reduce using rule 45 (instructionConditionnelle -> SINON { listeInstructions } .)
 
 
-state 92
+state 90
 
     (46) instructionConditionnelle -> SINON_SI ( expr ) . { listeInstructions } instructionConditionnelle
-    {               shift and go to state 98
+    {               shift and go to state 96
 
 
-state 93
+state 91
 
     (47) instructionConditionnelle -> SI ( expr ) . { listeInstructions } instructionConditionnelle
-    {               shift and go to state 99
+    {               shift and go to state 97
 
 
-state 94
+state 92
 
     (43) declarationAffectation -> type IDENTIFIANT = expr . ;
     (23) expr -> expr . - produit
     (24) expr -> expr . + produit
-    ;               shift and go to state 100
-    -               shift and go to state 46
-    +               shift and go to state 47
+    ;               shift and go to state 98
+    -               shift and go to state 45
+    +               shift and go to state 46
 
 
-state 95
+state 93
 
     (11) ecrire -> ECRIRE ( expr ) . ;
-    ;               shift and go to state 101
+    ;               shift and go to state 99
 
 
-state 96
+state 94
 
     (28) exprList -> expr , exprList .
     )               reduce using rule 28 (exprList -> expr , exprList .)
 
 
-state 97
+state 95
 
     (44) instructionConditionnelle -> TANT_QUE ( expr ) { . listeInstructions }
     (2) listeInstructions -> . instruction listeInstructions
@@ -1860,7 +1790,7 @@ state 97
     ECRIRE          shift and go to state 17
     TYPE            shift and go to state 18
 
-    listeInstructions              shift and go to state 102
+    listeInstructions              shift and go to state 100
     instruction                    shift and go to state 3
     instruction_retourner          shift and go to state 4
     instructionConditionnelle      shift and go to state 5
@@ -1870,7 +1800,7 @@ state 97
     ecrire                         shift and go to state 10
     type                           shift and go to state 16
 
-state 98
+state 96
 
     (46) instructionConditionnelle -> SINON_SI ( expr ) { . listeInstructions } instructionConditionnelle
     (2) listeInstructions -> . instruction listeInstructions
@@ -1902,7 +1832,7 @@ state 98
     ECRIRE          shift and go to state 17
     TYPE            shift and go to state 18
 
-    listeInstructions              shift and go to state 103
+    listeInstructions              shift and go to state 101
     instructionConditionnelle      shift and go to state 5
     instruction                    shift and go to state 3
     instruction_retourner          shift and go to state 4
@@ -1912,7 +1842,7 @@ state 98
     ecrire                         shift and go to state 10
     type                           shift and go to state 16
 
-state 99
+state 97
 
     (47) instructionConditionnelle -> SI ( expr ) { . listeInstructions } instructionConditionnelle
     (2) listeInstructions -> . instruction listeInstructions
@@ -1944,7 +1874,7 @@ state 99
     ECRIRE          shift and go to state 17
     TYPE            shift and go to state 18
 
-    listeInstructions              shift and go to state 104
+    listeInstructions              shift and go to state 102
     instructionConditionnelle      shift and go to state 5
     instruction                    shift and go to state 3
     instruction_retourner          shift and go to state 4
@@ -1954,7 +1884,7 @@ state 99
     ecrire                         shift and go to state 10
     type                           shift and go to state 16
 
-state 100
+state 98
 
     (43) declarationAffectation -> type IDENTIFIANT = expr ; .
     IDENTIFIANT     reduce using rule 43 (declarationAffectation -> type IDENTIFIANT = expr ; .)
@@ -1969,7 +1899,7 @@ state 100
     }               reduce using rule 43 (declarationAffectation -> type IDENTIFIANT = expr ; .)
 
 
-state 101
+state 99
 
     (11) ecrire -> ECRIRE ( expr ) ; .
     IDENTIFIANT     reduce using rule 11 (ecrire -> ECRIRE ( expr ) ; .)
@@ -1984,25 +1914,25 @@ state 101
     }               reduce using rule 11 (ecrire -> ECRIRE ( expr ) ; .)
 
 
-state 102
+state 100
 
     (44) instructionConditionnelle -> TANT_QUE ( expr ) { listeInstructions . }
+    }               shift and go to state 103
+
+
+state 101
+
+    (46) instructionConditionnelle -> SINON_SI ( expr ) { listeInstructions . } instructionConditionnelle
+    }               shift and go to state 104
+
+
+state 102
+
+    (47) instructionConditionnelle -> SI ( expr ) { listeInstructions . } instructionConditionnelle
     }               shift and go to state 105
 
 
 state 103
-
-    (46) instructionConditionnelle -> SINON_SI ( expr ) { listeInstructions . } instructionConditionnelle
-    }               shift and go to state 106
-
-
-state 104
-
-    (47) instructionConditionnelle -> SI ( expr ) { listeInstructions . } instructionConditionnelle
-    }               shift and go to state 107
-
-
-state 105
 
     (44) instructionConditionnelle -> TANT_QUE ( expr ) { listeInstructions } .
     IDENTIFIANT     reduce using rule 44 (instructionConditionnelle -> TANT_QUE ( expr ) { listeInstructions } .)
@@ -2017,7 +1947,7 @@ state 105
     }               reduce using rule 44 (instructionConditionnelle -> TANT_QUE ( expr ) { listeInstructions } .)
 
 
-state 106
+state 104
 
     (46) instructionConditionnelle -> SINON_SI ( expr ) { listeInstructions } . instructionConditionnelle
     (44) instructionConditionnelle -> . TANT_QUE ( expr ) { listeInstructions }
@@ -2029,9 +1959,9 @@ state 106
     SINON_SI        shift and go to state 14
     SI              shift and go to state 15
 
-    instructionConditionnelle      shift and go to state 108
+    instructionConditionnelle      shift and go to state 106
 
-state 107
+state 105
 
     (47) instructionConditionnelle -> SI ( expr ) { listeInstructions } . instructionConditionnelle
     (44) instructionConditionnelle -> . TANT_QUE ( expr ) { listeInstructions }
@@ -2043,9 +1973,9 @@ state 107
     SINON_SI        shift and go to state 14
     SI              shift and go to state 15
 
-    instructionConditionnelle      shift and go to state 109
+    instructionConditionnelle      shift and go to state 107
 
-state 108
+state 106
 
     (46) instructionConditionnelle -> SINON_SI ( expr ) { listeInstructions } instructionConditionnelle .
     IDENTIFIANT     reduce using rule 46 (instructionConditionnelle -> SINON_SI ( expr ) { listeInstructions } instructionConditionnelle .)
@@ -2060,7 +1990,7 @@ state 108
     }               reduce using rule 46 (instructionConditionnelle -> SINON_SI ( expr ) { listeInstructions } instructionConditionnelle .)
 
 
-state 109
+state 107
 
     (47) instructionConditionnelle -> SI ( expr ) { listeInstructions } instructionConditionnelle .
     IDENTIFIANT     reduce using rule 47 (instructionConditionnelle -> SI ( expr ) { listeInstructions } instructionConditionnelle .)
@@ -2077,9 +2007,7 @@ state 109
 
 Conflicts:
 
-shift/reduce conflict for OU in state 60 resolved as shift
-shift/reduce conflict for ET in state 60 resolved as shift
-shift/reduce conflict for OU in state 77 resolved as shift
-shift/reduce conflict for ET in state 77 resolved as shift
-shift/reduce conflict for OU in state 78 resolved as shift
-shift/reduce conflict for ET in state 78 resolved as shift
+shift/reduce conflict for OU in state 74 resolved as shift
+shift/reduce conflict for ET in state 74 resolved as shift
+shift/reduce conflict for OU in state 76 resolved as shift
+shift/reduce conflict for ET in state 76 resolved as shift

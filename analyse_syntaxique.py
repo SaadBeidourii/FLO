@@ -82,7 +82,7 @@ class FloParser(Parser):
         return arbre_abstrait.Variable(p.IDENTIFIANT)
 
     @_('LIRE "(" ")"')
-    def facteur(self,p):
+    def facteur(self, p):
         return arbre_abstrait.Lire()
 
     # Règles pour les appels de fonction
@@ -119,8 +119,8 @@ class FloParser(Parser):
         return arbre_abstrait.Booleen(p.BOOLEEN)
 
     @_('NON booleen')
-    def booleen(self, p):
-        return arbre_abstrait.BooleenOperation('NON', p.booleen,None)
+    def boolean(self, p):
+        return arbre_abstrait.Operation('NON', p[1])
 
     @_('booleen ET booleen')
     def booleen(self, p):

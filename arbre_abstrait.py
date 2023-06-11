@@ -18,19 +18,16 @@ class Programme:
 
 
 class Operation:
-    def __init__(self, operateur, exp1, exp2):
-        self.operateur = operateur
+    def __init__(self, op, exp1, exp2):
         self.exp1 = exp1
+        self.op = op
         self.exp2 = exp2
 
     def afficher(self, indent=0):
-        afficher("<operation>", indent)
-        afficher(self.operateur, indent + 1)
+        afficher('<operation "' + self.op + '">', indent)
         self.exp1.afficher(indent + 1)
         self.exp2.afficher(indent + 1)
-        afficher("</operation>", indent)
-
-
+        afficher('</operation "' + self.op + '">', indent)
 
 
 class ListeInstructions:
@@ -121,7 +118,7 @@ class Booleen:
 
 
 class BooleenOperation:
-    def __init__(self, operateur, operande_gauche, operande_droit=None):
+    def __init__(self, operateur, operande_gauche, operande_droit):
         self.operateur = operateur
         self.operande_gauche = operande_gauche
         self.operande_droit = operande_droit
@@ -129,11 +126,10 @@ class BooleenOperation:
     def afficher(self, indent=0):
         afficher("<booleenOperation>", indent)
         afficher(self.operateur, indent + 1)
-        self.operande_gauche.afficher(indent + 1)
-        if self.operande_droit is not None:
-            self.operande_droit.afficher(indent + 1)
+        if self.operande_gauche is not None:
+            self.operande_gauche.afficher(indent + 1)
+        self.operande_droit.afficher(indent + 1)
         afficher("</booleenOperation>", indent)
-
 
 
 class Declaration:
