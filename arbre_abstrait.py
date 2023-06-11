@@ -30,16 +30,7 @@ class Operation:
         self.exp2.afficher(indent + 1)
         afficher("</operation>", indent)
 
-class OperationNonBooleen:
-    def __init__(self, operateur, exp1):
-        self.operateur = operateur
-        self.exp1 = exp1
 
-    def afficher(self, indent=0):
-        afficher("<Non Booleen>", indent)
-        afficher(self.operateur, indent + 1)
-        self.exp1.afficher(indent + 1)
-        afficher("</Non Booleen>", indent)
 
 
 class ListeInstructions:
@@ -48,7 +39,7 @@ class ListeInstructions:
 
     def afficher(self, indent=0):
         afficher("<listeInstructions>", indent)
-        for instruction in self.instructions:
+        for instruction in reversed(self.instructions):
             instruction.afficher(indent + 1)
         afficher("</listeInstructions>", indent)
 
@@ -130,7 +121,7 @@ class Booleen:
 
 
 class BooleenOperation:
-    def __init__(self, operateur, operande_gauche, operande_droit):
+    def __init__(self, operateur, operande_gauche, operande_droit=None):
         self.operateur = operateur
         self.operande_gauche = operande_gauche
         self.operande_droit = operande_droit
